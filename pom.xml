@@ -17,9 +17,8 @@
 		<jdk.version>1.8</jdk.version>
 		<jersey.version>2.27</jersey.version>
 		<slf4j.version>1.7.25</slf4j.version>
+		<groovy.version>2.5.1</groovy.version>
 
-		<maven.failsafe.version>2.4.3-alpha-1</maven.failsafe.version>
-		<maven.compiler.version>2.5.1</maven.compiler.version>
 	</properties>
 
 	<dependencies>
@@ -71,7 +70,6 @@
 			<version>${jersey.version}</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
@@ -82,6 +80,14 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
 			<version>${slf4j.version}</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all -->
+		<dependency>
+				<groupId>org.codehaus.groovy</groupId>
+				<artifactId>groovy-all</artifactId>
+				<version>${groovy.version}</version>
+				<type>pom</type>
 		</dependency>
 
 	</dependencies>
@@ -117,28 +123,14 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.1.0</version>
-				<executions>
-					<execution>
-						<id>package-jar</id>
-						<phase>package</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>${jetty.version}</version>
 				<configuration>
 					<httpConnector>
-						<port>8680</port>
+						<port>8080</port>
 					</httpConnector>
+					<scanIntervalSeconds>5000</scanIntervalSeconds>
 				</configuration>
 			</plugin>
 
