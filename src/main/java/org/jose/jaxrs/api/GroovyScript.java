@@ -1,5 +1,11 @@
 package org.jose.jaxrs.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
@@ -11,8 +17,36 @@ public class GroovyScript {
   private Binding binding;
 
   public GroovyScript( String script ){
-    this.script = script;
+    this.script = this.getFile(script);
     binding = new Binding();
+  }
+
+  private String getFile(String fileName) {
+
+    StringBuilder result = new StringBuilder("");
+
+    ClassLoader classLoader = getClass().getClassLoader();
+    File file = new File(classLoader.getResource("/groovy/" + fileName + ".groovy").getFile());
+
+    try (Scanner scanner = new Scanner(file)) {
+
+      while (scanner.hasNextLine()) {
+        String line = scanner.nextLine();
+        result.append(line).append("\n");
+      }
+
+      scanner.close();
+
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return result.toString();
+
+  }
+
+  public void setVariable( String var, Object value ) {
+    binding.setVariable(var, value);
   }
 
   public String getResult() {
@@ -32,7 +66,11 @@ public class GroovyScript {
       this.result = value.toString();
     }
     catch (Exception err) {
-      this.result = err.toString();
+      StringWriter sw = new StringWriter();
+      PrintWriter pw = new PrintWriter(sw);
+
+      err.printStackTrace(pw);
+      this.result = sw.toString();
     }
 
   }
