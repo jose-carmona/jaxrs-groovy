@@ -21,30 +21,4 @@ public final class EmbeddedServer {
 
 	private EmbeddedServer() {
 	}
-
-	public static void main(String[] args) throws Exception {
-		URI baseUri = UriBuilder.fromUri("http://localhost").port(SERVER_PORT)
-				.build();
-		ResourceConfig config = new ResourceConfig(GroovyScriptServer.class);
-		Server server = JettyHttpContainerFactory.createServer(baseUri, config,
-				false);
-
-		ContextHandler contextHandler = new ContextHandler("/calc");
-		contextHandler.setHandler(server.getHandler());
-
-		ProtectionDomain protectionDomain = EmbeddedServer.class
-				.getProtectionDomain();
-		URL location = protectionDomain.getCodeSource().getLocation();
-
-		ResourceHandler resourceHandler = new ResourceHandler();
-		resourceHandler.setWelcomeFiles(new String[] { "index.html" });
-		resourceHandler.setResourceBase(location.toExternalForm());
-		System.out.println(location.toExternalForm());
-		HandlerCollection handlerCollection = new HandlerCollection();
-		handlerCollection.setHandlers(new Handler[] { resourceHandler,
-				contextHandler, new DefaultHandler() });
-		server.setHandler(handlerCollection);
-		server.start();
-		server.join();
-	}
 }

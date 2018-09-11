@@ -9,7 +9,12 @@ import java.util.Scanner;
 import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class GroovyScript {
+
+  final Logger logger = LoggerFactory.getLogger(GroovyScript.class);
 
   private String script;
   private String result;
@@ -54,6 +59,8 @@ public class GroovyScript {
   }
 
   public void run() {
+
+    logger.debug("run()");
 
     try {
 
