@@ -13,14 +13,21 @@ import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
 
+import org.jose.jaxrs.server.EmbeddedServer;
+
 public class Steps {
 
+  EmbeddedServer server;
   RequestSpecification rs;
   Response response;
 
   @Before
-  public void setUp() {
-    baseURI = "https://127.0.0.1:8080";
+  public void setUp() throws Throwable  {
+    baseURI = "http://127.0.0.1:8680";
+
+    this.server = new EmbeddedServer();
+    server.start();
+
     rs = given();
   }
 
@@ -40,8 +47,8 @@ public class Steps {
   }
 
   @Entonces("el resultado debe ser \"([^\"]*)\"$")
-  public void el_API_de_personajes_de_Rick_y_Morty_debe_mostrar_el_nombre(String name) throws Throwable {
-    response.then().body("result", equalTo(name));
+  public void el_resultado_debe_ser(String rt) throws Throwable {
+    response.then().body("result", equalTo(rt));
   }
 
 
