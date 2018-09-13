@@ -13,7 +13,7 @@
 
 		<mainClass>org.jose.jaxrs.server.EmbeddedServer</mainClass>
 
-		<jetty.version>9.4.11.v20180605</jetty.version>
+		<jetty.version>9.4.12.v20180830</jetty.version>
 		<jdk.version>1.8</jdk.version>
 		<jersey.version>2.27</jersey.version>
 		<slf4j.version>1.7.25</slf4j.version>
@@ -59,6 +59,12 @@
 			<artifactId>jersey-container-servlet-core</artifactId>
 			<version>${jersey.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-jetty-servlet</artifactId>
+			<version>${jersey.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
@@ -129,13 +135,30 @@
       <scope>test</scope>
     </dependency>
 
+		<!-- jetty server -->
 		<dependency>
-      <groupId>org.eclipse.jetty</groupId>
-      <artifactId>jetty-webapp</artifactId>
-			<version>9.4.12.v20180830</version>
-      <scope>test</scope>
-    </dependency>
-
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-server</artifactId>
+			<version>9.2.5.v20141112</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>${jetty.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlets</artifactId>
+			<version>${jetty.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.eclipse.jetty</groupId>
+		    <artifactId>jetty-util</artifactId>
+				<version>${jetty.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -174,7 +197,7 @@
 				<version>${jetty.version}</version>
 				<configuration>
 					<httpConnector>
-						<port>8080</port>
+						<port>8680</port>
 					</httpConnector>
 					<scanIntervalSeconds>5000</scanIntervalSeconds>
 				</configuration>

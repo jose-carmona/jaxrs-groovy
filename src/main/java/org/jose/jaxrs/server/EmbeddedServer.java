@@ -13,8 +13,12 @@ import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.webapp.WebAppContext;
 
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+
+
+import org.glassfish.jersey.servlet.ServletContainer;
 import org.glassfish.jersey.jetty.JettyHttpContainerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
@@ -25,6 +29,7 @@ public final class EmbeddedServer {
 
 	private int SERVER_PORT = 8680;
 	private String URL = "http://localhost";
+	private Server jettyServer;
 
 	final Logger logger = LoggerFactory.getLogger(EmbeddedServer.class);
 
@@ -33,6 +38,20 @@ public final class EmbeddedServer {
 
 	public void start() throws Throwable {
 
+		ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SESSIONS);
+    context.setContextPath("/");
+
+    jettyServer = new Server(SERVER_PORT);
+    jettyServer.setHandler(context);
+
+    ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/calc/*");
+    jerseyServlet.setInitOrder(0);
+
+    // Tells the Jersey Servlet which REST service/class to load.
+    jerseyServlet.setInitParameter("javax.ws.rs.Application", "org.jose.jaxrs.server.GroovyScriptServer");
+
+
+/*
  		URI baseUri = UriBuilder.fromUri(URL).port(SERVER_PORT).build();
 
  		// ResourceConfig config = new ResourceConfig(ScriptService.class);
@@ -59,7 +78,7 @@ public final class EmbeddedServer {
 		WebAppContext webapp = new WebAppContext(location.toExternalForm(), "/");
 		server.setHandler(webapp);
 
- 		// server.setHandler(handlerCollection);
- 		server.start();
+ 		// server.setHandler(handlerCollection); --*/
+ 		jettyServer.start();
  	}
 }
