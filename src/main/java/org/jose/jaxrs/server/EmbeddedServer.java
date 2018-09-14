@@ -47,38 +47,12 @@ public final class EmbeddedServer {
     ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/calc/*");
     jerseyServlet.setInitOrder(0);
 
-    // Tells the Jersey Servlet which REST service/class to load.
     jerseyServlet.setInitParameter("javax.ws.rs.Application", "org.jose.jaxrs.server.GroovyScriptServer");
-
-
-/*
- 		URI baseUri = UriBuilder.fromUri(URL).port(SERVER_PORT).build();
-
- 		// ResourceConfig config = new ResourceConfig(ScriptService.class);
-		ResourceConfig config = new ResourceConfig().packages("").register(ScriptService.class);
-
- 		Server server = JettyHttpContainerFactory.createServer(baseUri, config, false);
-
- 		ContextHandler contextHandler = new ContextHandler("/calc");
- 		contextHandler.setHandler(server.getHandler());
-
- 		ProtectionDomain protectionDomain = EmbeddedServer.class.getProtectionDomain();
-
- 		URL location = protectionDomain.getCodeSource().getLocation();
-
- 		ResourceHandler resourceHandler = new ResourceHandler();
- 		resourceHandler.setWelcomeFiles(new String[] { "index.html" });
- 		resourceHandler.setResourceBase(location.toExternalForm());
-
- 		logger.debug(location.toExternalForm());
-
- 		HandlerCollection handlerCollection = new HandlerCollection();
- 		handlerCollection.setHandlers(new Handler[] { contextHandler, resourceHandler, new DefaultHandler() });
-
-		WebAppContext webapp = new WebAppContext(location.toExternalForm(), "/");
-		server.setHandler(webapp);
-
- 		// server.setHandler(handlerCollection); --*/
  		jettyServer.start();
  	}
+
+	public void stop() throws Throwable {
+		jettyServer.stop();
+		jettyServer.join();
+	}
 }

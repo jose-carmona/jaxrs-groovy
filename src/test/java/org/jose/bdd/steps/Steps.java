@@ -8,6 +8,7 @@ import cucumber.api.java.es.Cuando;
 
 import io.restassured.specification.RequestSpecification;
 import io.restassured.response.Response;
+import io.restassured.http.ContentType;
 
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
@@ -22,21 +23,22 @@ public class Steps {
   Response response;
 
   @Before
-  public void setUp() throws Throwable  {
+  public void setUp() throws Throwable {
     baseURI = "http://127.0.0.1:8680";
 
     this.server = new EmbeddedServer();
-    server.start();
+    this.server.start();
 
-    rs = given();
+    rs = given().contentType("application/json");
   }
 
   @After
-  public void afterScenario() {
+  public void afterScenario() throws Throwable {
+    server.stop();
   }
 
-  @Cuando("^invoco al test")
-  public void invoco_al_test() throws Throwable {
+  @Cuando("^invoco al servicio REST de test$")
+  public void invoco_al_servicio_REST_de_test() throws Throwable {
     response = rs.when().get("/calc/script/test");
     response.then().assertThat().statusCode(200);
   }
@@ -46,10 +48,16 @@ public class Steps {
     response.then().assertThat().statusCode(code);
   }
 
+  @Entonces("^devolver un tipo de contenido json$")
+  public void devolver_un_tipo_de_contenido_json() throws Throwable {
+    response.then().assertThat().contentType(ContentType.JSON);
+  }
+
   @Entonces("el resultado debe ser \"([^\"]*)\"$")
   public void el_resultado_debe_ser(String rt) throws Throwable {
-    response.then().body("result", equalTo(rt));
+    response.then().body("test", equalTo(rt));
   }
+
 
 
 }

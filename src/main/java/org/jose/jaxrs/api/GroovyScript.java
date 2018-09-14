@@ -21,9 +21,13 @@ public class GroovyScript {
 
   private Binding binding;
 
+  public GroovyScript( ) {
+    binding = new Binding();
+  }
+
   public GroovyScript( String script ){
     this.script = this.getFile(script);
-    binding = new Binding();
+    this.binding = new Binding();
   }
 
   private String getFile(String fileName) {
@@ -47,7 +51,10 @@ public class GroovyScript {
     }
 
     return result.toString();
+  }
 
+  public void setGroovyScript( String script ) {
+    this.script = script;
   }
 
   public void setVariable( String var, Object value ) {
@@ -79,7 +86,6 @@ public class GroovyScript {
       err.printStackTrace(pw);
       this.result = sw.toString();
     }
-
   }
 
 }

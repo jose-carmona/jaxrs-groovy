@@ -139,26 +139,19 @@
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
-			<version>9.2.5.v20141112</version>
-			<scope>test</scope>
+			<version>${jetty.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-servlet</artifactId>
 			<version>${jetty.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlets</artifactId>
+    	<artifactId>jetty-util</artifactId>
 			<version>${jetty.version}</version>
-			<scope>test</scope>
 		</dependency>
-		<dependency>
-		    <groupId>org.eclipse.jetty</groupId>
-		    <artifactId>jetty-util</artifactId>
-				<version>${jetty.version}</version>
-		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -182,6 +175,7 @@
 				<configuration>
 					<source>${jdk.version}</source>
 					<target>${jdk.version}</target>
+					<compilerArgument>-Xlint:deprecation</compilerArgument>
 				</configuration>
 			</plugin>
 

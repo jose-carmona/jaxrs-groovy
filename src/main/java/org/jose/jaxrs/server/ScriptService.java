@@ -6,24 +6,34 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 
 import org.jose.jaxrs.api.GroovyScript;
 
 import org.jose.jaxrs.model.Liquidacion;
+import org.jose.jaxrs.model.Test;
+
 
 @Path("/script")
 public class ScriptService {
 
 	@GET
 	@Path("/test")
-	public GroovyScript s1() {
+	@Produces({MediaType.APPLICATION_JSON})
+	public Test s1() {
 
-		GroovyScript s1 = new GroovyScript("test");
+		GroovyScript s1 = new GroovyScript();
 
-		s1.setVariable( "foo", new Integer(2));
+		s1.setVariable( "a", new Integer(2));
+		s1.setVariable( "b", new Integer(2));
+		s1.setGroovyScript( "a+b" );
 		s1.run();
 
-		return s1;
+		Test r = new Test();
+		r.test = s1.getResult();
+
+		return r;
 	}
 
 	@GET
