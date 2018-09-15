@@ -25,34 +25,6 @@ public class GroovyScript {
     binding = new Binding();
   }
 
-  public GroovyScript( String script ){
-    this.script = this.getFile(script);
-    this.binding = new Binding();
-  }
-
-  private String getFile(String fileName) {
-
-    StringBuilder result = new StringBuilder("");
-
-    ClassLoader classLoader = getClass().getClassLoader();
-    File file = new File(classLoader.getResource("/groovy/" + fileName + ".groovy").getFile());
-
-    try (Scanner scanner = new Scanner(file)) {
-
-      while (scanner.hasNextLine()) {
-        String line = scanner.nextLine();
-        result.append(line).append("\n");
-      }
-
-      scanner.close();
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    return result.toString();
-  }
-
   public void setGroovyScript( String script ) {
     this.script = script;
   }
@@ -61,7 +33,7 @@ public class GroovyScript {
     binding.setVariable(var, value);
   }
 
-  public String getResult() {
+  public String getResultado() {
     return result;
   }
 
@@ -75,7 +47,7 @@ public class GroovyScript {
 
       GroovyShell shell = new GroovyShell(binding);
 
-      Object value = shell.evaluate(this.script);
+      Object value = shell.evaluate(script);
 
       this.result = value.toString();
     }

@@ -18,6 +18,7 @@
 		<jersey.version>2.27</jersey.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<groovy.version>2.5.1</groovy.version>
+		<commonmark.version>0.11.0</commonmark.version>
 
 	</properties>
 
@@ -151,6 +152,14 @@
     	<artifactId>jetty-util</artifactId>
 			<version>${jetty.version}</version>
 		</dependency>
+
+		<!-- com.atlassian.commonmark -->
+		<dependency>
+			<groupId>com.atlassian.commonmark</groupId>
+			<artifactId>commonmark</artifactId>
+			<version>${commonmark.version}</version>
+		</dependency>
+
 
 	</dependencies>
 

@@ -16,5 +16,5 @@ Característica: Uso de jetty + jaxrs + groovy + cucumber + rest-assured
   Escenario: El servicio REST de test debe responder con un json tal que { "resultado" : "4" }
     Cuando invoco al servicio REST de test
     Entonces el API debe devolver un statusCode 200
-      Y devolver un tipo de contenido json
-      Y el resultado debe ser "4"
+      Y el API debe devolver un tipo de contenido json
+      Y el API debe devolver un resultado igual a "4"

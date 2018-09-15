@@ -1,4 +1,4 @@
-package org.jose.bdd.steps;
+package org.jose.bdd.steps.rest;
 
 import cucumber.api.java.Before;
 import cucumber.api.java.After;
@@ -16,7 +16,7 @@ import static org.hamcrest.Matchers.*;
 
 import org.jose.jaxrs.server.EmbeddedServer;
 
-public class Steps {
+public class StepsREST {
 
   EmbeddedServer server;
   RequestSpecification rs;
@@ -24,11 +24,11 @@ public class Steps {
 
   @Before
   public void setUp() throws Throwable {
-    baseURI = "http://127.0.0.1:8680";
 
-    this.server = new EmbeddedServer();
-    this.server.start();
+    server = new EmbeddedServer();
+    server.start();
 
+    baseURI = server.getURI().toString();
     rs = given().contentType("application/json");
   }
 
@@ -48,16 +48,14 @@ public class Steps {
     response.then().assertThat().statusCode(code);
   }
 
-  @Entonces("^devolver un tipo de contenido json$")
-  public void devolver_un_tipo_de_contenido_json() throws Throwable {
+  @Entonces("^el API debe devolver un tipo de contenido json$")
+  public void el_API_debe_devolver_un_tipo_de_contenido_json() throws Throwable {
     response.then().assertThat().contentType(ContentType.JSON);
   }
 
-  @Entonces("el resultado debe ser \"([^\"]*)\"$")
-  public void el_resultado_debe_ser(String rt) throws Throwable {
+  @Entonces("^el API debe devolver un resultado igual a \"([^\"]*)\"$")
+  public void el_API_debe_devolver_un_resultado_igual_a(String rt) throws Throwable {
     response.then().body("test", equalTo(rt));
   }
-
-
 
 }

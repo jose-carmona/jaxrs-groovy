@@ -31,7 +31,7 @@ public class ScriptService {
 		s1.run();
 
 		Test r = new Test();
-		r.test = s1.getResult();
+		r.test = s1.getResultado();
 
 		return r;
 	}
@@ -42,12 +42,12 @@ public class ScriptService {
 
 		Liquidacion resultado = new Liquidacion();
 
-		GroovyScript calculo = new GroovyScript("calculo");
+		GroovyScript calculo = new GroovyScript();
 
 		calculo.setVariable("resultado", resultado);
 		calculo.run();
 
-		System.out.println(calculo.getResult());
+		System.out.println(calculo.getResultado());
 
 		return resultado;
 	}
