@@ -5,7 +5,7 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import org.jose.jaxrs.util.CodeVisitor;
-
+import org.jose.jaxrs.model.Liquidacion;
 
 public class ReglaCalculo {
 
@@ -14,16 +14,25 @@ public class ReglaCalculo {
   private String script;
   private String resultado;
 
+  // r es la Liquidación resultado de la regla de cálculo
+  private Liquidacion r;
+
   private GroovyScript groovyScript;
 
   // Constructor
   public ReglaCalculo() {
     groovyScript = new GroovyScript();
+    r = new Liquidacion();
+    groovyScript.setVariable("r", r);
   }
 
   // Getters / Setters
   public String getHtml() {
     return html;
+  }
+
+  public Liquidacion getLiqResultado() {
+    return r;
   }
 
   public void setMarkdown( String markdown ) {

@@ -18,42 +18,41 @@ public class Liquidacion {
   private MonetaryAmount iva;
   private int tipoIva;
 
-  public String getPrincipal() {
-    return this.principal == null ? null : this.principal.toString();
+  public MonetaryAmount getPrincipal() {
+    return principal;
   }
 
-  public String getBaseImponible() {
-    return this.baseImponible == null ? null : this.baseImponible.toString();
+  public MonetaryAmount getBaseImponible() {
+    return baseImponible;
   }
 
-  public String getIva() {
-    return this.iva == null ? null : this.iva.toString();
+  public MonetaryAmount getIva() {
+    return iva;
   }
 
   public int getTipoIva() {
-    return this.tipoIva;
+    return tipoIva;
   }
 
   public void setPrincipal( BigDecimal importe ) {
-    this.principal = Money.of( importe, "EUR");
-    this.principal = this.principal.with(Monetary.getDefaultRounding());
+    principal = Money.of( importe, "EUR");
+    principal = principal.with(Monetary.getDefaultRounding());
   }
 
   public void setBaseImponible( BigDecimal importe ) {
-    this.baseImponible = Money.of( importe, "EUR");
-    this.baseImponible = this.baseImponible.with(Monetary.getDefaultRounding());
+    baseImponible = Money.of( importe, "EUR");
+    baseImponible = baseImponible.with(Monetary.getDefaultRounding());
   }
 
   public void setTipoIva( int tipoIva ) {
-    this.tipoIva = tipoIva;
-
+    tipoIva = tipoIva;
   }
 
   public void aplicarIva() {
     BigDecimal tipoIvaTantoPor1 = new BigDecimal(tipoIva);
     tipoIvaTantoPor1 = tipoIvaTantoPor1.divide(new BigDecimal(100));
-    this.iva = this.baseImponible.multiply(tipoIvaTantoPor1);
-    this.iva = this.iva.with(Monetary.getDefaultRounding());
-    this.principal = this.baseImponible.add(this.iva);
+    iva = baseImponible.multiply(tipoIvaTantoPor1);
+    iva = iva.with(Monetary.getDefaultRounding());
+    principal = baseImponible.add(iva);
   }
 }

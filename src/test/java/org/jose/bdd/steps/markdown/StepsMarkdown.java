@@ -8,6 +8,8 @@ import cucumber.api.java.es.Cuando;
 
 import cucumber.api.PendingException;
 
+import org.javamoney.moneta.Money;
+
 import static org.junit.Assert.*;
 
 import org.jose.jaxrs.api.ReglaCalculo;
@@ -53,6 +55,11 @@ public class StepsMarkdown {
   @Entonces("^el HTML de la regla de cálculo debe ser:$")
   public void el_HTML_de_la_regla_de_calculo_debe_ser(String esperado) throws Throwable {
     assertEquals(esperado, reglaCalculo.getHtml());
+  }
+
+  @Entonces("^la liquidación resultado debe tener un principal igual a (\\d+)$")
+  public void la_liquidación_resultado_debe_tener_un_principal_igual_a(int esperado) throws Throwable {
+    assertEquals(Money.of( esperado, "EUR"), reglaCalculo.getLiqResultado().getPrincipal());
   }
 
 }
