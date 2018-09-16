@@ -19,6 +19,7 @@
 		<slf4j.version>1.7.25</slf4j.version>
 		<groovy.version>2.5.1</groovy.version>
 		<commonmark.version>0.11.0</commonmark.version>
+		<cucumber.version>3.0.2</cucumber.version>
 
 	</properties>
 
@@ -107,16 +108,17 @@
 
 		<!-- cucumber dependencies -->
 		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-java</artifactId>
-			<version>[1.2.5,)</version>
+			<version>${cucumber.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- cucumber-junit dependencies -->
 		<dependency>
-			<groupId>info.cukes</groupId>
+			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-junit</artifactId>
-			<version>[1.2.5,)</version>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 

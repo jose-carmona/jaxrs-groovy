@@ -45,7 +45,7 @@ public class Liquidacion {
   }
 
   public void setTipoIva( int tipoIva ) {
-    tipoIva = tipoIva;
+    this.tipoIva = tipoIva;
   }
 
   public void aplicarIva() {

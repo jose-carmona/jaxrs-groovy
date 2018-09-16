@@ -7,9 +7,9 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        format = { "pretty", "html:target/cucumber" },
-        features = "classpath:cucumber/REST/",
-        glue = {"org.jose.bdd.steps.rest"}
+  // plugin = {"pretty", "io.cucumber.pro.JsonReporter:all"},
+  features = "classpath:cucumber/REST/",
+  glue = {"org.jose.bdd.steps.rest"}
 )
 
 public class RunCukeTest {

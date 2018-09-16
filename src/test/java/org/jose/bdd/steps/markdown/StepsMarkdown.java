@@ -1,5 +1,9 @@
 package org.jose.bdd.steps.markdown;
 
+import java.math.BigDecimal;
+
+import org.javamoney.moneta.Money;
+
 import cucumber.api.java.Before;
 import cucumber.api.java.After;
 import cucumber.api.java.es.Dado;
@@ -7,8 +11,6 @@ import cucumber.api.java.es.Entonces;
 import cucumber.api.java.es.Cuando;
 
 import cucumber.api.PendingException;
-
-import org.javamoney.moneta.Money;
 
 import static org.junit.Assert.*;
 
@@ -57,9 +59,14 @@ public class StepsMarkdown {
     assertEquals(esperado, reglaCalculo.getHtml());
   }
 
-  @Entonces("^la liquidación resultado debe tener un principal igual a (\\d+)$")
-  public void la_liquidación_resultado_debe_tener_un_principal_igual_a(int esperado) throws Throwable {
-    assertEquals(Money.of( esperado, "EUR"), reglaCalculo.getLiqResultado().getPrincipal());
+  @Entonces("la liquidación resultado debe tener un principal igual a {bigdecimal} Euros")
+  public void la_liquidacion_resultado_debe_tener_un_principal_igual_a_Euros(BigDecimal esperado) throws Throwable {
+    assertEquals(Money.of(esperado, "EUR"), reglaCalculo.getLiqResultado().getPrincipal());
+  }
+
+  @Entonces("la liquidación resultado debe tener un IVA igual a {bigdecimal} Euros")
+  public void la_liquidacion_resultado_debe_tener_un_IVA_igual_a_Euros(BigDecimal esperado) throws Throwable {
+    assertEquals(Money.of(esperado, "EUR"), reglaCalculo.getLiqResultado().getIva());
   }
 
 }

@@ -5,11 +5,6 @@ Característica: El resultado de una regla de cálculo debe ser una liquidación
   Para guarda en BD la liquidación resultado.
 
   Escenario:
-    Dado
-    Cuando
-    Entonces
-
-
     Dado que tenemos la siguiente regla de cálculo:
     """
     # Regla de cálculo con liquidación resultado
@@ -21,4 +16,4 @@ Característica: El resultado de una regla de cálculo debe ser una liquidación
     ```
     """
     Cuando ejecuto la regla de cálculo
-    Entonces la liquidación resultado debe tener un principal igual a 100
+    Entonces la liquidación resultado debe tener un principal igual a 100.0 Euros
