@@ -14,7 +14,7 @@ import cucumber.api.PendingException;
 
 import static org.junit.Assert.*;
 
-import org.jose.jaxrs.api.ReglaCalculoMarkdown;
+import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 
 public class StepsReglaCalculoMarkdown {
 

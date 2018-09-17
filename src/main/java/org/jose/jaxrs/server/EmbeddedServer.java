@@ -37,7 +37,7 @@ public final class EmbeddedServer {
     ServletHolder jerseyServlet = context.addServlet(ServletContainer.class, "/calc/*");
     jerseyServlet.setInitOrder(0);
 
-    jerseyServlet.setInitParameter("javax.ws.rs.Application", "org.jose.jaxrs.server.GroovyScriptServer");
+    jerseyServlet.setInitParameter("javax.ws.rs.Application", "org.jose.jaxrs.server.JaxrsServer");
  		jettyServer.start();
 
 		logger.debug("URI" + jettyServer.getURI());

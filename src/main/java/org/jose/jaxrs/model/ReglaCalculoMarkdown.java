@@ -1,4 +1,4 @@
-package org.jose.jaxrs.api;
+package org.jose.jaxrs.model;
 
 import org.commonmark.node.Node;
 import org.commonmark.parser.Parser;

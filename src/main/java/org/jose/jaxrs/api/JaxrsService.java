@@ -1,4 +1,4 @@
-package org.jose.jaxrs.server;
+package org.jose.jaxrs.api;
 
 import java.math.BigDecimal;
 
@@ -9,14 +9,13 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.jose.jaxrs.api.GroovyScript;
-
+import org.jose.jaxrs.model.GroovyScript;
 import org.jose.jaxrs.model.Liquidacion;
 import org.jose.jaxrs.model.Test;
 
 
 @Path("/script")
-public class ScriptService {
+public class JaxrsService {
 
 	@GET
 	@Path("/test")

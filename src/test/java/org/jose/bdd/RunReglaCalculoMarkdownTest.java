@@ -7,7 +7,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-  // plugin = {"pretty", "io.cucumber.pro.JsonReporter:all"},
+  plugin = {"progress","html:target/cucumber"},
   features = {"classpath:cucumber/markdown/","classpath:cucumber/liquidacion/"},
   glue = {"org.jose.bdd.steps.markdown"}
 )

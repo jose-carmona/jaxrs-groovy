@@ -2,9 +2,9 @@ package org.jose.jaxrs.server;
 
 import org.glassfish.jersey.server.ResourceConfig;
 
-public class GroovyScriptServer extends ResourceConfig {
+public class JaxrsServer extends ResourceConfig {
 
-	public GroovyScriptServer() {
+	public JaxrsServer() {
 		packages("org.jose.jaxrs");
 	}
 }

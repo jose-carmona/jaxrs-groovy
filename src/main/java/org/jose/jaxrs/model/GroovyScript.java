@@ -1,4 +1,4 @@
-package org.jose.jaxrs.api;
+package org.jose.jaxrs.model;
 
 import java.io.File;
 import java.io.IOException;

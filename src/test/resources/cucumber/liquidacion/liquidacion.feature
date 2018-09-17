@@ -4,7 +4,7 @@ Característica: El resultado de una regla de cálculo debe ser una liquidación
   Quiero obtener el resultado de la regla de cálculo como un objeto liquidación
   Para guarda en BD la liquidación resultado.
 
-  Escenario:
+  Escenario: La regla de cálculo debe contar con un objeto r que equivale a la Liquidación Resultado
     Dado que tenemos la siguiente regla de cálculo:
     """
     # Regla de cálculo con liquidación resultado

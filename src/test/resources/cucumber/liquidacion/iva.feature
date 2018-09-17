@@ -5,7 +5,7 @@ Característica: La liquidación debe contar con soporte para el IVA
     aplicándole el tipo de IVA correspondiente
   Para simplificar las reglas de cálculo que necesiten IVA
 
-  Escenario:
+  Escenario: La liquidación debe calcular el principal a partir de la Base Imponible aplicando el IVA
     Dado que tenemos la siguiente regla de cálculo:
     """
     # Regla de cálculo de liquidación con IVA
