@@ -1,6 +1,5 @@
 package org.jose.jaxrs.model;
 
-// TODO: mover Liquidacion a interface
 import org.jose.jaxrs.model.Liquidacion;
 
 public interface ReglaCalculo {

@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.jose.jaxrs.model.GroovyScript;
 import org.jose.jaxrs.model.Liquidacion;
+import org.jose.jaxrs.model.LiquidacionImpl;
 import org.jose.jaxrs.model.Test;
 
 
@@ -39,7 +40,7 @@ public class JaxrsService {
 	@Path("/liq")
 	public Liquidacion liq() {
 
-		Liquidacion resultado = new Liquidacion();
+		Liquidacion resultado = new LiquidacionImpl();
 
 		GroovyScript calculo = new GroovyScript();
 

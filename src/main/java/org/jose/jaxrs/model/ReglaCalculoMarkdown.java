@@ -5,7 +5,7 @@ import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 
 import org.jose.jaxrs.util.CodeVisitor;
-import org.jose.jaxrs.model.Liquidacion;
+import org.jose.jaxrs.model.LiquidacionImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class ReglaCalculoMarkdown extends GroovyScript implements ReglaCalculo {
   // Constructor
   public ReglaCalculoMarkdown() {
     super();
-    r = new Liquidacion();
+    r = new LiquidacionImpl();
     setVariable("r", r);
   }
 
