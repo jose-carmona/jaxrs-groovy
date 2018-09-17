@@ -21,11 +21,16 @@ public class GroovyScript {
 
   private Binding binding;
 
-  public GroovyScript( ) {
+  public GroovyScript() {
+    logger.debug("constructor");
     binding = new Binding();
   }
 
-  public void setGroovyScript( String script ) {
+  public String getScript() {
+    return script;
+  }
+
+  public void setScript( String script ) {
     this.script = script;
   }
 
@@ -37,19 +42,14 @@ public class GroovyScript {
     return result;
   }
 
-  public void run() {
+  public void calcular() {
 
-    logger.debug("run()");
+    logger.debug("calcular()");
 
     try {
-
-      binding.setVariable("foo", new Integer(2));
-
       GroovyShell shell = new GroovyShell(binding);
-
       Object value = shell.evaluate(script);
-
-      this.result = value.toString();
+      result = value.toString();
     }
     catch (Exception err) {
       StringWriter sw = new StringWriter();

@@ -27,8 +27,8 @@ public class ScriptService {
 
 		s1.setVariable( "a", new Integer(2));
 		s1.setVariable( "b", new Integer(2));
-		s1.setGroovyScript( "a+b" );
-		s1.run();
+		s1.setScript( "a+b" );
+		s1.calcular();
 
 		Test r = new Test();
 		r.test = s1.getResultado();
@@ -45,9 +45,7 @@ public class ScriptService {
 		GroovyScript calculo = new GroovyScript();
 
 		calculo.setVariable("resultado", resultado);
-		calculo.run();
-
-		System.out.println(calculo.getResultado());
+		calculo.calcular();
 
 		return resultado;
 	}

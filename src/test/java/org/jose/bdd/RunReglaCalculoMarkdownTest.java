@@ -12,5 +12,5 @@ import org.junit.runner.RunWith;
   glue = {"org.jose.bdd.steps.markdown"}
 )
 
-public class RunMarkdownTest {
+public class RunReglaCalculoMarkdownTest {
 }

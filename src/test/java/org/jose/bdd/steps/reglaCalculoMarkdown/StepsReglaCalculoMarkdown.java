@@ -14,15 +14,15 @@ import cucumber.api.PendingException;
 
 import static org.junit.Assert.*;
 
-import org.jose.jaxrs.api.ReglaCalculo;
+import org.jose.jaxrs.api.ReglaCalculoMarkdown;
 
-public class StepsMarkdown {
+public class StepsReglaCalculoMarkdown {
 
-  private ReglaCalculo reglaCalculo;
+  private ReglaCalculoMarkdown reglaCalculo;
 
   @Before
   public void setUp() throws Throwable {
-    reglaCalculo = new ReglaCalculo();
+    reglaCalculo = new ReglaCalculoMarkdown();
   }
 
   @After
