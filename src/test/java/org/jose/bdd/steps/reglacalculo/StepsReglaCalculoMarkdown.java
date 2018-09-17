@@ -1,6 +1,7 @@
-package org.jose.bdd.steps.markdown;
+package org.jose.bdd.steps.reglacalculo;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import org.javamoney.moneta.Money;
 
@@ -12,9 +13,12 @@ import cucumber.api.java.es.Cuando;
 
 import cucumber.api.PendingException;
 
+import io.cucumber.datatable.DataTable;
+
 import static org.junit.Assert.*;
 
 import org.jose.jaxrs.model.ReglaCalculoMarkdown;
+import org.jose.jaxrs.model.TarifaSimple;
 
 public class StepsReglaCalculoMarkdown {
 
@@ -67,6 +71,11 @@ public class StepsReglaCalculoMarkdown {
   @Entonces("la liquidación resultado debe tener un IVA igual a {bigdecimal} Euros")
   public void la_liquidacion_resultado_debe_tener_un_IVA_igual_a_Euros(BigDecimal esperado) throws Throwable {
     assertEquals(Money.of(esperado, "EUR"), reglaCalculo.getLiqResultado().getIva());
+  }
+
+  @Dado("que tenemos la siguiente tarifa simple:")
+  public void que_tenemos_la_siguiente_tarifa_simple(Map<String, BigDecimal> tarifa) {
+    reglaCalculo.setVariable( "t", new TarifaSimple( tarifa ) );
   }
 
 }
