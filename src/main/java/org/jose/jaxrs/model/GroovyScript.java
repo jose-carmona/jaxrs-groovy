@@ -49,7 +49,7 @@ public class GroovyScript {
     try {
       GroovyShell shell = new GroovyShell(binding);
       Object value = shell.evaluate(script);
-      result = value.toString();
+      result = value == null ? null : value.toString();
     }
     catch (Exception err) {
       StringWriter sw = new StringWriter();
@@ -57,6 +57,8 @@ public class GroovyScript {
 
       err.printStackTrace(pw);
       this.result = sw.toString();
+      logger.debug("ERROR: " + sw.toString());
+      logger.debug(script);
     }
   }
 

@@ -1,6 +1,7 @@
 package org.jose.jaxrs.model;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import javax.money.MonetaryOperator;
 
@@ -12,11 +13,21 @@ import org.javamoney.moneta.Money;
 
 public class LiquidacionImpl implements Liquidacion {
 
+  private Map conceptos;
+
   private MonetaryAmount principal;
 
   private MonetaryAmount baseImponible;
   private MonetaryAmount iva;
   private int tipoIva;
+
+  public Map getConceptos() {
+    return conceptos;
+  }
+  
+  public void setConceptos( Map conceptos ) {
+    this.conceptos = conceptos;
+  }
 
   public MonetaryAmount getPrincipal() {
     return principal;

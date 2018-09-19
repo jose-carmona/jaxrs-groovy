@@ -3,6 +3,9 @@ package org.jose.bdd.steps.reglacalculo;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.javamoney.moneta.Money;
 
 import cucumber.api.java.Before;
@@ -21,6 +24,8 @@ import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 import org.jose.jaxrs.model.TarifaSimple;
 
 public class StepsReglaCalculoMarkdown {
+
+  final Logger logger = LoggerFactory.getLogger(StepsReglaCalculoMarkdown.class);
 
   private ReglaCalculoMarkdown reglaCalculo;
 
@@ -76,6 +81,11 @@ public class StepsReglaCalculoMarkdown {
   @Dado("que tenemos la siguiente tarifa simple:")
   public void que_tenemos_la_siguiente_tarifa_simple(Map<String, BigDecimal> tarifa) {
     reglaCalculo.setVariable( "t", new TarifaSimple( tarifa ) );
+  }
+
+  @Entonces("la liquidación debe tener el siguiente conjunto de conceptos:")
+  public void la_liquidacion_debe_tener_el_siguiente_conjunto_de_conceptos(Map<String, BigDecimal> conceptosEsperados) {
+    assertEquals(conceptosEsperados, reglaCalculo.getLiqResultado().getConceptos());
   }
 
 }

@@ -1,10 +1,14 @@
 package org.jose.jaxrs.model;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 import javax.money.MonetaryAmount;
 
 public interface Liquidacion {
+
+  public Map getConceptos();
+  public void setConceptos( Map conceptos );
 
   public MonetaryAmount getPrincipal();
   public void setPrincipal( BigDecimal importe );
