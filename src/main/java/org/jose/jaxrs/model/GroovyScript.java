@@ -16,6 +16,7 @@ public class GroovyScript {
 
   final Logger logger = LoggerFactory.getLogger(GroovyScript.class);
 
+  private String scriptGlobal;
   private String script;
   private String result;
 
@@ -34,6 +35,10 @@ public class GroovyScript {
     this.script = script;
   }
 
+  public void setScriptGlobal( String script ) {
+    scriptGlobal = script;
+  }
+
   public void setVariable( String var, Object value ) {
     binding.setVariable(var, value);
   }
@@ -44,11 +49,13 @@ public class GroovyScript {
 
   public void calcular() {
 
+    String scr = scriptGlobal == null ? script : scriptGlobal + "\n" + script;
+
     logger.debug("calcular()");
 
     try {
       GroovyShell shell = new GroovyShell(binding);
-      Object value = shell.evaluate(script);
+      Object value = shell.evaluate(scr);
       result = value == null ? null : value.toString();
     }
     catch (Exception err) {
@@ -58,7 +65,7 @@ public class GroovyScript {
       err.printStackTrace(pw);
       this.result = sw.toString();
       logger.debug("ERROR: " + sw.toString());
-      logger.debug(script);
+      logger.debug(scr);
     }
   }
 

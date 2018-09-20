@@ -88,4 +88,9 @@ public class StepsReglaCalculoMarkdown {
     assertEquals(conceptosEsperados, reglaCalculo.getLiqResultado().getConceptos());
   }
 
+  @Dado("que tenemos el siguiente markdown global:")
+  public void que_tenemos_el_siguiente_markdown_global(String markdownGlobal) {
+    reglaCalculo.setMarkdownGlobal( markdownGlobal );
+  }
+
 }

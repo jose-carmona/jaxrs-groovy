@@ -14,7 +14,9 @@ public class ReglaCalculoMarkdown extends GroovyScript implements ReglaCalculo {
 
   final Logger logger = LoggerFactory.getLogger(ReglaCalculoMarkdown.class);
 
+  private String markdownGlobal;
   private String markdown;
+  private String htmlGlobal;
   private String html;
   private String resultado;
 
@@ -35,6 +37,21 @@ public class ReglaCalculoMarkdown extends GroovyScript implements ReglaCalculo {
 
   public Liquidacion getLiqResultado() {
     return r;
+  }
+
+  public void setMarkdownGlobal( String markdown ) {
+    markdownGlobal = markdown;
+
+    Parser parser = Parser.builder().build();
+    Node document = parser.parse(markdownGlobal);
+
+    // estraemos el script en groovy
+    CodeVisitor visitor = new CodeVisitor();
+    document.accept(visitor);
+    setScriptGlobal(new String(visitor.code));
+
+    HtmlRenderer renderer = HtmlRenderer.builder().build();
+    htmlGlobal = renderer.render(document);
   }
 
   public void setMarkdown( String markdown ) {
