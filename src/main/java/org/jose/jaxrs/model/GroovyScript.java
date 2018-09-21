@@ -49,6 +49,7 @@ public class GroovyScript {
 
   public void calcular() {
 
+    // incluimos previamente el script global si está definido
     String scr = scriptGlobal == null ? script : scriptGlobal + "\n" + script;
 
     logger.debug("calcular()");
