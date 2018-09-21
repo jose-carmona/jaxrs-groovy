@@ -95,4 +95,9 @@ public class StepsReglaCalculoMarkdown {
     reglaCalculo.setScriptGlobal( reglaGlobal.getScript() );
   }
 
+  @Dado("que tenemos un objeto con los siguientes valores:")
+  public void que_tenemos_un_objeto_con_los_siguientes_valores(Map<String, BigDecimal> objetoDado) {
+    reglaCalculo.setVariable( "o", objetoDado );
+  }
+
 }
