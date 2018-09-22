@@ -8,7 +8,6 @@ import javax.money.MonetaryAmount;
 public interface Liquidacion {
 
   public Map getConceptos();
-  public void setConceptos( Map conceptos );
 
   public MonetaryAmount getPrincipal();
   public void setPrincipal( BigDecimal importe );

@@ -10,17 +10,11 @@ Característica: La Liquidación permitirá asociar un conjunto de conceptos
     # Regla de cálculo con conceptos
 
     ```
-    def c = [:]
-    c << [ "Concepto 1" : 100.01]
-    c << [ "Concepto 2" : 200.02]
-    c << [ "Concepto 3" : 300.03]
+    r.c << [ "Concepto 1" : 100.01]
+    r.c << [ "Concepto 2" : 200.02]
+    r.c << [ "Concepto 3" : 300.03]
 
-    def p1 = c.collect()
-    def p2 = p1.value
-
-    r.setPrincipal(p2.sum())
-    r.setConceptos(c)
-
+    r.setPrincipal(r.c.collect().value.sum())
     ```
     """
     Cuando ejecuto la regla de cálculo

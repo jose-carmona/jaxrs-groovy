@@ -2,6 +2,7 @@ package org.jose.jaxrs.model;
 
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.LinkedHashMap;
 
 import javax.money.MonetaryOperator;
 
@@ -13,7 +14,7 @@ import org.javamoney.moneta.Money;
 
 public class LiquidacionImpl implements Liquidacion {
 
-  private Map conceptos;
+  public LinkedHashMap c;  // conceptos de la Liquidación
 
   private MonetaryAmount principal;
 
@@ -21,28 +22,16 @@ public class LiquidacionImpl implements Liquidacion {
   private MonetaryAmount iva;
   private int tipoIva;
 
-  public Map getConceptos() {
-    return conceptos;
+  public LiquidacionImpl() {
+    c = new LinkedHashMap();
   }
-  
-  public void setConceptos( Map conceptos ) {
-    this.conceptos = conceptos;
+
+  public Map getConceptos() {
+    return c;
   }
 
   public MonetaryAmount getPrincipal() {
     return principal;
-  }
-
-  public MonetaryAmount getBaseImponible() {
-    return baseImponible;
-  }
-
-  public MonetaryAmount getIva() {
-    return iva;
-  }
-
-  public int getTipoIva() {
-    return tipoIva;
   }
 
   public void setPrincipal( BigDecimal importe ) {
@@ -50,13 +39,25 @@ public class LiquidacionImpl implements Liquidacion {
     principal = principal.with(Monetary.getDefaultRounding());
   }
 
+  public MonetaryAmount getBaseImponible() {
+    return baseImponible;
+  }
+
   public void setBaseImponible( BigDecimal importe ) {
     baseImponible = Money.of( importe, "EUR");
     baseImponible = baseImponible.with(Monetary.getDefaultRounding());
   }
 
+  public MonetaryAmount getIva() {
+    return iva;
+  }
+
   public void setTipoIva( int tipoIva ) {
     this.tipoIva = tipoIva;
+  }
+
+  public int getTipoIva() {
+    return tipoIva;
   }
 
   public void aplicarIva() {
