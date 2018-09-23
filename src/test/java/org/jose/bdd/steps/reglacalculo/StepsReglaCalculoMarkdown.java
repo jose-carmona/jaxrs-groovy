@@ -80,7 +80,7 @@ public class StepsReglaCalculoMarkdown {
 
   @Dado("que tenemos la siguiente tarifa simple:")
   public void que_tenemos_la_siguiente_tarifa_simple(Map<String, BigDecimal> tarifa) {
-    reglaCalculo.setVariable( "t", new TarifaSimple( tarifa ) );
+    reglaCalculo.setVariable( "t", tarifa );
   }
 
   @Entonces("la liquidación debe tener el siguiente conjunto de conceptos:")

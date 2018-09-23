@@ -1,10 +1,12 @@
 # language: es
-Característica: El resultado de una regla de cálculo debe ser una liquidación
-  Como programador
-  Quiero obtener el resultado de la regla de cálculo como un objeto liquidación
-  Para guarda en BD la liquidación resultado.
+Característica: La reglas de cálculo deben acceder a datos de tarifas
+  Como responsable de las reglas de cálculo
+  Quiero acceder a los datos de tarifas
+  Para para dichos datos no estén dentro de las reglas de cálculo y, por tanto,
+    las reglas de cálculo no necesiten modificarse cada vez que se actualicen
+    los precios y/o límites.
 
-  Escenario: La regla de cálculo debe contar con un objeto r que equivale a la Liquidación Resultado
+  Escenario: La regla de cálculo sencialla accesible como objeto "t"
     Dado que tenemos la siguiente tarifa simple:
           | concepto1.precio | 123.45 |
           | concepto2.precio | 100.01 |
@@ -12,11 +14,10 @@ Característica: El resultado de una regla de cálculo debe ser una liquidación
       """
       # Regla de cálculo con Tarifa Simple
 
-      La tarifa está disponible mediante el objeto *t* y dispone de un método
-      *v* que devuelve el valor que le corresponde al concepto:
+      La tarifa simple está disponible mediante el objeto Map *t*:
 
       ```
-      r.setPrincipal(t.v("concepto1.precio") + t.v("concepto2.precio"))
+      r.setPrincipal( t["concepto1.precio"] + t["concepto2.precio"] )
       ```
       """
     Cuando ejecuto la regla de cálculo
