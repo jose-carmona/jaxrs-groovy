@@ -73,6 +73,11 @@ public class StepsReglaCalculoMarkdown {
     assertEquals(Money.of(esperado, "EUR"), reglaCalculo.getLiqResultado().getPrincipal());
   }
 
+  @Entonces("la liquidación resultado debe tener una base imponible igual a {bigdecimal} Euros")
+  public void la_liquidacion_resultado_debe_tener_una_base_imponible_igual_a_Euros(BigDecimal esperado) throws Throwable {
+    assertEquals(Money.of(esperado, "EUR"), reglaCalculo.getLiqResultado().getBaseImponible());
+  }
+
   @Entonces("la liquidación resultado debe tener un IVA igual a {bigdecimal} Euros")
   public void la_liquidacion_resultado_debe_tener_un_IVA_igual_a_Euros(BigDecimal esperado) throws Throwable {
     assertEquals(Money.of(esperado, "EUR"), reglaCalculo.getLiqResultado().getIva());
