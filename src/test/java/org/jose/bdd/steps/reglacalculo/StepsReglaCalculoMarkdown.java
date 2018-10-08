@@ -3,6 +3,9 @@ package org.jose.bdd.steps.reglacalculo;
 import java.math.BigDecimal;
 import java.util.Map;
 
+import javax.inject.Inject;
+import cucumber.runtime.java.guice.ScenarioScoped;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,16 +25,30 @@ import static org.junit.Assert.*;
 
 import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 import org.jose.jaxrs.model.TarifaSimple;
+import org.jose.jaxrs.model.cucumber.StringFeatureSupplier;
+import org.jose.jaxrs.model.cucumber.TestContext;
 
+@ScenarioScoped
 public class StepsReglaCalculoMarkdown {
 
   final Logger logger = LoggerFactory.getLogger(StepsReglaCalculoMarkdown.class);
 
   private ReglaCalculoMarkdown reglaCalculo;
+  private TestContext contexto;
+
+  @Inject
+  public StepsReglaCalculoMarkdown(TestContext testContext) {
+    contexto = testContext;
+    logger.debug("Constructor: contexto iniciado?" + contexto.iniciado());
+    reglaCalculo = contexto.iniciado() ?
+                      contexto.reglaCalculo :
+                      new ReglaCalculoMarkdown();
+    contexto.reglaCalculo = reglaCalculo;
+  }
 
   @Before
   public void setUp() throws Throwable {
-    reglaCalculo = new ReglaCalculoMarkdown();
+    logger.debug("setUp?" + contexto.iniciado());
   }
 
   @After
@@ -45,7 +62,7 @@ public class StepsReglaCalculoMarkdown {
 
   @Dado("^que asignamos a la variable \"([^\"]*)\" el valor numérico (\\d+)$")
   public void que_asignamos_a_la_variable_el_valor_numérico(String var, int valor) throws Throwable {
-    reglaCalculo.setVariable(var, new Integer(valor));
+    reglaCalculo.setVariable(var, Integer.valueOf(valor));
   }
 
   @Cuando("^ejecuto la regla de cálculo$")

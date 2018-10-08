@@ -23,7 +23,6 @@ public class GroovyScript {
   private Binding binding;
 
   public GroovyScript() {
-    logger.debug("constructor");
     binding = new Binding();
   }
 
@@ -51,8 +50,6 @@ public class GroovyScript {
 
     // incluimos previamente el script global si está definido
     String scr = scriptGlobal == null ? script : scriptGlobal + "\n" + script;
-
-    logger.debug("calcular()");
 
     try {
       GroovyShell shell = new GroovyShell(binding);
