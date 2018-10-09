@@ -6,8 +6,6 @@ import cucumber.api.java.es.Dado;
 import cucumber.api.java.es.Entonces;
 import cucumber.api.java.es.Cuando;
 
-import cucumber.runtime.java.guice.ScenarioScoped;
-
 import io.restassured.specification.RequestSpecification;
 import io.restassured.response.Response;
 import io.restassured.http.ContentType;
@@ -18,7 +16,6 @@ import static org.hamcrest.Matchers.*;
 
 import org.jose.jaxrs.server.EmbeddedServer;
 
-@ScenarioScoped
 public class StepsREST {
 
   EmbeddedServer server;

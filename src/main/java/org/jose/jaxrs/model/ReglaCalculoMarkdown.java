@@ -7,9 +7,6 @@ import org.commonmark.renderer.html.HtmlRenderer;
 import org.jose.jaxrs.util.CodeVisitor;
 import org.jose.jaxrs.model.LiquidacionImpl;
 
-import cucumber.runtime.FeatureSupplier;
-import cucumber.runtime.Runtime;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,12 +52,4 @@ public class ReglaCalculoMarkdown extends GroovyScript implements ReglaCalculo {
     html = renderer.render(document);
   }
 
-  public void test(FeatureSupplier features) {
-    final Runtime runtime = Runtime.builder()
-                    .withFeatureSupplier(features)
-                    .withArg("--glue org.jose.bdd.steps.reglacalculo")
-                    .build();
-    runtime.run();
-    // return runtime.exitStatus();
-  }
 }

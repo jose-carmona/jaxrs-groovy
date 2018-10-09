@@ -3,9 +3,6 @@ package org.jose.bdd.steps.reglacalculo;
 import java.math.BigDecimal;
 import java.util.Map;
 
-import javax.inject.Inject;
-import cucumber.runtime.java.guice.ScenarioScoped;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +24,8 @@ import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 import org.jose.jaxrs.model.TarifaSimple;
 import org.jose.jaxrs.model.cucumber.StringFeatureSupplier;
 import org.jose.jaxrs.model.cucumber.TestContext;
+import org.jose.jaxrs.model.cucumber.SingletonReglaCalculoMarkdownTest;
 
-@ScenarioScoped
 public class StepsTestReglaCalculoMarkdown {
 
   final Logger logger = LoggerFactory.getLogger(StepsTestReglaCalculoMarkdown.class);
@@ -37,21 +34,17 @@ public class StepsTestReglaCalculoMarkdown {
   private TestContext contexto;
   private StringFeatureSupplier features;
 
-  @Inject
   public StepsTestReglaCalculoMarkdown(TestContext testContext) {
     contexto = testContext;
-    logger.debug("Constructor: contexto iniciado?" + contexto.iniciado());
-    reglaCalculo = contexto.iniciado() ?
-                      contexto.reglaCalculo :
-                      new ReglaCalculoMarkdown();
-    features = new StringFeatureSupplier();
-    contexto.reglaCalculo = reglaCalculo;
+    if (!contexto.iniciado()) {
+      contexto.reglaCalculo = new ReglaCalculoMarkdown();
+    }
 
+    features = new StringFeatureSupplier();
   }
 
   @Before
   public void setUp() throws Throwable {
-    logger.debug("setUp?" + contexto.iniciado());
   }
 
   @After
@@ -65,15 +58,15 @@ public class StepsTestReglaCalculoMarkdown {
 
   @Cuando("ejecuto el test de la regla de cálculo")
   public void ejecuto_el_test_de_la_regla_de_calculo() {
-    contexto.reglaCalculo = reglaCalculo;
-    reglaCalculo.test(features);
-    contexto.borrar();
+    SingletonReglaCalculoMarkdownTest singleton = SingletonReglaCalculoMarkdownTest.getInstace();
+    singleton.reglaCalculo = contexto.reglaCalculo;
+    singleton.test(features);
   }
 
   @Entonces("el resultado del test es correcto")
   public void el_resultado_del_test_es_correcto() {
-      // Write code here that turns the phrase above into concrete actions
-      throw new cucumber.api.PendingException();
+    SingletonReglaCalculoMarkdownTest singleton = SingletonReglaCalculoMarkdownTest.getInstace();
+    assertTrue(singleton.exitStatus==0);
   }
 
 }

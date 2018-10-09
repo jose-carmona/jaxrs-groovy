@@ -123,15 +123,8 @@
 		<!-- cucumber-guice dependencies -->
 		<dependency>
 		    <groupId>io.cucumber</groupId>
-				<artifactId>cucumber-guice</artifactId>
+				<artifactId>cucumber-picocontainer</artifactId>
 		    <version>${cucumber.version}</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/com.google.inject/guice -->
-		<dependency>
-		    <groupId>com.google.inject</groupId>
-		    <artifactId>guice</artifactId>
-		    <version>4.2.1</version>
 		</dependency>
 
 		<!-- junit dependencies -->
