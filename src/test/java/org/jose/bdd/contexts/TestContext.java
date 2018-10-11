@@ -1,4 +1,4 @@
-package org.jose.jaxrs.model.cucumber;
+package org.jose.bdd.contexts;
 
 import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 

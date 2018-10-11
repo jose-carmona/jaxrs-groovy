@@ -23,8 +23,9 @@ import static org.junit.Assert.*;
 import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 import org.jose.jaxrs.model.TarifaSimple;
 import org.jose.jaxrs.model.cucumber.StringFeatureSupplier;
-import org.jose.jaxrs.model.cucumber.TestContext;
 import org.jose.jaxrs.model.cucumber.SingletonReglaCalculoMarkdownTest;
+
+import org.jose.bdd.contexts.TestContext;
 
 public class StepsTestReglaCalculoMarkdown {
 
