@@ -13,13 +13,15 @@
 
 		<mainClass>org.jose.jaxrs.server.EmbeddedServer</mainClass>
 
+		<junit.version>4.12</junit.version>
 		<jetty.version>9.4.12.v20180830</jetty.version>
 		<jdk.version>1.8</jdk.version>
 		<jersey.version>2.27</jersey.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<groovy.version>2.5.2</groovy.version>
 		<commonmark.version>0.11.0</commonmark.version>
-		<cucumber.version>4.0.0</cucumber.version>
+		<cucumber.version>4.0.1</cucumber.version>
+		<restassured.version>3.1.1</restassured.version>
 
 	</properties>
 
@@ -131,7 +133,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>[4.12,)</version>
+			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -139,7 +141,7 @@
     <dependency>
 			<groupId>io.rest-assured</groupId>
 			<artifactId>rest-assured</artifactId>
-			<version>[3.1.0,)</version>
+			<version>${restassured.version}</version>
       <scope>test</scope>
     </dependency>
 
