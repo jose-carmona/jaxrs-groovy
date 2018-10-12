@@ -1,5 +1,8 @@
 package org.jose.bdd.steps.reglacalculo;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -27,26 +30,23 @@ import org.jose.jaxrs.model.cucumber.SingletonReglaCalculoMarkdownTest;
 
 import org.jose.bdd.contexts.TestContext;
 
+@Singleton
 public class StepsReglaCalculoMarkdown {
 
   final Logger logger = LoggerFactory.getLogger(StepsReglaCalculoMarkdown.class);
 
-  private ReglaCalculoMarkdown reglaCalculo;
   private TestContext contexto;
 
-  public StepsReglaCalculoMarkdown(TestContext testContext) {
-    contexto = testContext;
-    if (!contexto.iniciado()) {
-      contexto.reglaCalculo = new ReglaCalculoMarkdown();
+  private ReglaCalculoMarkdown reglaCalculo;
+  private StringFeatureSupplier features;
+
+  @Inject
+  public StepsReglaCalculoMarkdown(TestContext contexto) {
+    this.contexto = contexto;
+    if (!this.contexto.iniciado()) {
+      this.contexto.reglaCalculo = new ReglaCalculoMarkdown();
     }
-  }
-
-  @Before
-  public void setUp() throws Throwable {
-  }
-
-  @After
-  public void afterScenario() throws Throwable {
+    features = new StringFeatureSupplier();
   }
 
   @Dado("^que tenemos la siguiente regla de cálculo:$")
@@ -120,6 +120,24 @@ public class StepsReglaCalculoMarkdown {
   public void que_tenemos_cargada_la_regla_de_calculo_a_comprobar() {
     SingletonReglaCalculoMarkdownTest singleton = SingletonReglaCalculoMarkdownTest.getInstace();
     contexto.reglaCalculo = singleton.reglaCalculo;
+  }
+
+  @Dado("que tenemos el siguiente test:")
+  public void que_tenemos_el_siguiente_test(String docString) throws Throwable {
+    features.addStringFeature(docString);
+  }
+
+  @Cuando("ejecuto el test de la regla de cálculo")
+  public void ejecuto_el_test_de_la_regla_de_calculo() {
+    SingletonReglaCalculoMarkdownTest singleton = SingletonReglaCalculoMarkdownTest.getInstace();
+    singleton.reglaCalculo = contexto.reglaCalculo;
+    singleton.test(features);
+  }
+
+  @Entonces("el resultado del test es correcto")
+  public void el_resultado_del_test_es_correcto() {
+    SingletonReglaCalculoMarkdownTest singleton = SingletonReglaCalculoMarkdownTest.getInstace();
+    assertTrue(singleton.exitStatus==0);
   }
 
 }

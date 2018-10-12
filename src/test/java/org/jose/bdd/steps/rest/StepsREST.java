@@ -1,5 +1,7 @@
 package org.jose.bdd.steps.rest;
 
+import javax.inject.Singleton;
+
 import cucumber.api.java.Before;
 import cucumber.api.java.After;
 import cucumber.api.java.es.Dado;
@@ -16,6 +18,7 @@ import static org.hamcrest.Matchers.*;
 
 import org.jose.jaxrs.server.EmbeddedServer;
 
+@Singleton
 public class StepsREST {
 
   EmbeddedServer server;
