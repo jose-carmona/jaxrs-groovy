@@ -5,7 +5,12 @@ import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 import cucumber.runtime.FeatureSupplier;
 import cucumber.runtime.Runtime;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SingletonReglaCalculoMarkdownTest {
+
+  final Logger logger = LoggerFactory.getLogger(SingletonReglaCalculoMarkdownTest.class);
 
   private static SingletonReglaCalculoMarkdownTest instance;
 
@@ -23,15 +28,9 @@ public class SingletonReglaCalculoMarkdownTest {
     return instance;
   }
 
-  public boolean iniciado() {
-    return reglaCalculo != null;
-  }
-
-  public void borrar() {
-    reglaCalculo = null;
-  }
-
   public void test(FeatureSupplier features) {
+    logger.debug("test!");
+    logger.debug(reglaCalculo.getScript());
     final Runtime runtime = Runtime.builder()
                     .withFeatureSupplier(features)
                     .withArg("--glue org.jose.bdd.steps.reglacalculo")
