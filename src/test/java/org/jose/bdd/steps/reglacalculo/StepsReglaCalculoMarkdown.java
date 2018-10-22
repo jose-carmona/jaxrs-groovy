@@ -1,8 +1,5 @@
 package org.jose.bdd.steps.reglacalculo;
 
-import javax.inject.Inject;
-import javax.inject.Singleton;
-
 import java.math.BigDecimal;
 import java.util.Map;
 
@@ -27,26 +24,16 @@ import org.jose.jaxrs.model.cucumber.SingletonReglaCalculoMarkdownTest;
 
 import org.jose.bdd.contexts.TestContext;
 
-@Singleton
 public class StepsReglaCalculoMarkdown {
 
   final Logger logger = LoggerFactory.getLogger(StepsReglaCalculoMarkdown.class);
 
-  private @Inject TestContext contexto;
+  private TestContext contexto;
 
   private ReglaCalculoMarkdown reglaCalculo;
 
   public StepsReglaCalculoMarkdown() {
-    if (contexto == null){
-      logger.debug("creo contexto");
-      contexto = new TestContext();
-    }
-
-    if (!contexto.iniciado()) {
-      logger.debug("inicio contexto");
-      contexto.iniciar();
-    }
-    reglaCalculo = contexto.getReglaCalculo();
+    reglaCalculo = new ReglaCalculoMarkdown();
   }
 
   @Dado("^que tenemos la siguiente regla de cálculo:$")

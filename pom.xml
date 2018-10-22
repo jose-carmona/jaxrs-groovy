@@ -24,7 +24,12 @@
 		<restassured.version>3.1.1</restassured.version>
 		<jaxb.version>2.3.0</jaxb.version>
 
+		<arquillian.version>1.2.0.1</arquillian.version>
+		<version.arquillian>1.2.0.1</version.arquillian>
+		<version.wildfly>14.0.1.Final</version.wildfly>
+
 	</properties>
+
 
 	<dependencies>
 
@@ -123,47 +128,6 @@
 			<version>${cucumber.version}</version>
 		</dependency>
 
-		<!-- cucumber-guice dependencies
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-picocontainer</artifactId>
-		  <version>${cucumber.version}</version>
-		</dependency> -->
-
-		<dependency>
-    	<groupId>org.jboss.weld.servlet</groupId>
-    	<artifactId>weld-servlet</artifactId>
-    	<version>2.4.8.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.weld.se</groupId>
-			<artifactId>weld-se-core</artifactId>
-			<version>2.4.8.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.weld.se</groupId>
-			<artifactId>weld-se</artifactId>
-			<version>2.4.8.Final</version>
-		</dependency>
-
-		<!-- cucumber-weld
-		<dependency>
-				<groupId>javax.enterprise</groupId>
-				<artifactId>cdi-api</artifactId>
-				<version>2.0</version>
-		</dependency>
-		<dependency>
-			<groupId>org.jboss.weld.se</groupId>
-			<artifactId>weld-se</artifactId>
-			<version>2.4.8.Final</version>
-	 	</dependency> -->
-
-		<dependency>
-			<groupId>io.cucumber</groupId>
-	    <artifactId>cucumber-weld</artifactId>
-	    <version>${cucumber.version}</version>
-		</dependency>
-
 		<!-- junit dependencies -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -204,6 +168,20 @@
 			<version>${commonmark.version}</version>
 		</dependency>
 
+
+		<!-- Arquillian -->
+		<dependency>
+			<groupId>org.jboss.arquillian.core</groupId>
+			<artifactId>arquillian-core-api</artifactId>
+			<version>1.4.0.Final</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss.arquillian.junit</groupId>
+			<artifactId>arquillian-junit-container</artifactId>
+			<version>1.4.0.Final</version>
+		</dependency>
 
 	</dependencies>
 
@@ -261,8 +239,81 @@
 		        <version>2.22.1</version>
 		      </dependency>
 		    </dependencies>
+
+				<configuration>
+					<systemPropertyVariables>
+						<jboss.home>${project.basedir}/target/wildfly-14.0.1.Final</jboss.home>
+						<module.path>${project.basedir}/target/wildfly-14.0.1.Final/modules</module.path>
+					</systemPropertyVariables>
+					<redirectTestOutputToFile>false</redirectTestOutputToFile>
+				</configuration>
+
 		  </plugin>
 
 		</plugins>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>wildfly-managed</id>
+
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<property>
+					<name>arquillian</name>
+					<value>wildfly-managed</value>
+				</property>
+			</activation>
+
+			<dependencies>
+				<dependency>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-arquillian-container-managed</artifactId>
+					<version>8.2.1.Final</version>
+				</dependency>
+				<dependency>
+					<groupId>org.wildfly</groupId>
+					<artifactId>wildfly-embedded</artifactId>
+					<version>8.2.0.Final</version>
+					<exclusions>
+						<exclusion>
+							<groupId>sun.jdk</groupId>
+							<artifactId>jconsole</artifactId>
+						</exclusion>
+					</exclusions>
+				</dependency>
+			</dependencies>
+			<build>
+				<plugins>
+							<plugin>
+									<groupId>org.apache.maven.plugins</groupId>
+									<artifactId>maven-dependency-plugin</artifactId>
+									<version>2.8</version>
+									<executions>
+											<execution>
+													<id>unpack</id>
+													<phase>process-test-classes</phase>
+													<goals>
+															<goal>unpack</goal>
+													</goals>
+													<configuration>
+															<artifactItems>
+																	<artifactItem>
+																			<groupId>org.wildfly</groupId>
+																			<artifactId>wildfly-dist</artifactId>
+																			<version>${version.wildfly}</version>
+																			<type>zip</type>
+																			<overWrite>false</overWrite>
+																			<outputDirectory>target</outputDirectory>
+																	</artifactItem>
+															</artifactItems>
+													</configuration>
+											</execution>
+									</executions>
+							</plugin>
+						</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 </project>
