@@ -36,18 +36,4 @@ public class JaxrsService {
 		return r;
 	}
 
-	@GET
-	@Path("/liq")
-	public Liquidacion liq() {
-
-		Liquidacion resultado = new LiquidacionImpl();
-
-		GroovyScript calculo = new GroovyScript();
-
-		calculo.setVariable("resultado", resultado);
-		calculo.calcular();
-
-		return resultado;
-	}
-
 }

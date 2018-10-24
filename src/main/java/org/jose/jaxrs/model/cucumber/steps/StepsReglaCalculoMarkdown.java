@@ -1,4 +1,4 @@
-package org.jose.bdd.steps.reglacalculo;
+package org.jose.jaxrs.model.cucumber.steps;
 
 import javax.inject.Inject;
 
