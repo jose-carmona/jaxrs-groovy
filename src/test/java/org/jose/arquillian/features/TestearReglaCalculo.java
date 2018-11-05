@@ -54,7 +54,7 @@ public class TestearReglaCalculo {
     // dado que tenemos la siguiente regla de cálculo
     reglaCalculo2Test.setReglaCalculo("r.setPrincipal( o[\"concepto1.ml\"] * t[\"concepto1.precio\"] )" );
 
-    // dado que tenemos el siguiente test
+    // dado que tenemos el siguiente test en gherkin
     String textoTest = "# language: es "+ System.lineSeparator() +
       "Característica: Test" + System.lineSeparator() +
       "  Como responsable de las reglas de cálculo" + System.lineSeparator() +

@@ -35,12 +35,10 @@ import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
 
-import org.jose.jaxrs.server.JaxrsServer;
-
 @RunWith(Arquillian.class)
 public class TestArquillian {
 
-  private static final String RESOURCE_PREFIX = "calc";
+  private static final String RESOURCE_PREFIX = "api";
 
   private final Logger logger = LoggerFactory.getLogger(TestArquillian.class);
 
@@ -52,23 +50,13 @@ public class TestArquillian {
     PomEquippedResolveStage pom = Maven.configureResolver().workOffline().loadPomFromFile("pom.xml");
 
     return ShrinkWrap.create(WebArchive.class)
-            .setWebXML("WEB-INF/web.xml")
-            .addAsLibraries(pom.resolve("io.rest-assured:rest-assured").withTransitivity().asFile())
-            .addAsLibraries(pom.resolve("org.glassfish.jersey.inject:jersey-hk2").withTransitivity().asFile())
-            .addAsLibraries(pom.resolve("org.glassfish.jersey.media:jersey-media-json-jackson").withTransitivity().asFile())
-            .addAsLibraries(pom.resolve("org.glassfish.jersey.containers:jersey-container-servlet-core").withTransitivity().asFile())
-            .addAsLibraries(pom.resolve("org.codehaus.groovy:groovy").withTransitivity().asFile())
             .addPackages(true,"org.jose")
+            .addAsLibraries(pom.resolve("org.codehaus.groovy:groovy").withTransitivity().asFile())
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
   }
 
   @ArquillianResource
   URL deploymentUrl;
-
-  @Test
-  public void test() {
-    logger.debug("test");
-  }
 
   @Test
   @RunAsClient
@@ -79,7 +67,7 @@ public class TestArquillian {
     response = given()
                   .contentType("application/json")
                   .when()
-                  .get("/script/test");
+                  .get("/calc/test");
 
     response.then().assertThat().statusCode(200);
     response.then().body("test", equalTo("4"));

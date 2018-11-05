@@ -1,340 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    @jose_carmona
+    Creado a patir de archetype WilldFly Quickstarts de JBoss
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.jose.ltr-jaxrs-groovy</groupId>
-	<artifactId>ltr-jaxrs-groovy</artifactId>
-	<packaging>war</packaging>
-	<version>1.0-SNAPSHOT</version>
-	<name>lrt - JAX-RS - Groovy</name>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <groupId>org.jose.ltr-jaxrs-groovy</groupId>
+    <artifactId>ltr-jaxrs-groovy</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+    <name>lrt - JAX-RS - Groovy</name>
 
-		<mainClass>org.jose.jaxrs.server.EmbeddedServer</mainClass>
+    <properties>
+        <!-- Explicitly declaring the source encoding eliminates the following
+            message: -->
+        <!-- [WARNING] Using platform encoding (UTF-8 actually) to copy filtered
+            resources, i.e. build is platform dependent! -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<junit.version>4.12</junit.version>
-		<jetty.version>9.4.12.v20180830</jetty.version>
-		<jdk.version>1.8</jdk.version>
-		<jersey.version>2.27</jersey.version>
-		<slf4j.version>1.7.25</slf4j.version>
-		<groovy.version>2.5.3</groovy.version>
-		<commonmark.version>0.11.0</commonmark.version>
-		<cucumber.version>4.0.2</cucumber.version>
-		<restassured.version>3.1.1</restassured.version>
-		<jaxb.version>2.3.0</jaxb.version>
+        <!-- JBoss dependency versions -->
+        <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
 
-		<arquillian.version>1.2.0.1</arquillian.version>
-		<version.arquillian>1.2.0.1</version.arquillian>
-		<version.wildfly>14.0.1.Final</version.wildfly>
+        <!-- Define the version of the JBoss BOMs we want to import to specify
+            tested stacks. -->
+        <version.jboss.bom>14.0.1.Final</version.jboss.bom>
 
-		<version.org.jboss.logging>3.3.2.Final</version.org.jboss.logging>
+        <!-- other plugin versions -->
+        <version.compiler.plugin>3.1</version.compiler.plugin>
+        <version.surefire.plugin>2.22.1</version.surefire.plugin>
+        <version.war.plugin>2.5</version.war.plugin>
 
-	</properties>
+        <!-- maven-compiler-plugin -->
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
 
+        <slf4j.version>1.7.25</slf4j.version>
+        <groovy.version>2.5.3</groovy.version>
+        <commonmark.version>0.11.0</commonmark.version>
+        <cucumber.version>4.0.2</cucumber.version>
+        <moneta.version>1.3</moneta.version>
+        <restassured.version>3.1.1</restassured.version>
 
-	<dependencies>
-
-		<dependency>
-			<groupId>javax.xml.bind</groupId>
-			<artifactId>jaxb-api</artifactId>
-			<version>${jaxb.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-core</artifactId>
-			<version>${jaxb.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
-			<version>${jaxb.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.activation</groupId>
-			<artifactId>activation</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>${jersey.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-jetty-http</artifactId>
-			<version>${jersey.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-servlet-core</artifactId>
-			<version>${jersey.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.glassfish.jersey.containers</groupId>
-			<artifactId>jersey-container-jetty-servlet</artifactId>
-			<version>${jersey.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.glassfish.jersey.media</groupId>
-			<artifactId>jersey-media-json-jackson</artifactId>
-			<version>${jersey.version}</version>
-		</dependency>
-		<dependency>
-    	<groupId>org.glassfish.jersey.inject</groupId>
-    	<artifactId>jersey-hk2</artifactId>
-			<version>${jersey.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.codehaus.groovy/groovy-all
-		<dependency>
-				<groupId>org.codehaus.groovy</groupId>
-				<artifactId>groovy-all</artifactId>
-				<version>${groovy.version}</version>
-				<type>pom</type>
-		</dependency>
-		-->
-
-		<dependency>
-		    <groupId>org.codehaus.groovy</groupId>
-		    <artifactId>groovy</artifactId>
-		    <version>2.5.3</version>
-		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.javamoney/moneta -->
-		<dependency>
-		    <groupId>org.javamoney</groupId>
-		    <artifactId>moneta</artifactId>
-		    <version>1.3</version>
-		    <type>pom</type>
-		</dependency>
-
-		<!-- cucumber dependencies -->
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-java</artifactId>
-			<version>${cucumber.version}</version>
-		</dependency>
-
-		<!-- cucumber-junit dependencies -->
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-junit</artifactId>
-			<version>${cucumber.version}</version>
-		</dependency>
-
-		<!-- junit dependencies -->
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-		</dependency>
-
-		<!-- rest-assured -->
-    <dependency>
-			<groupId>io.rest-assured</groupId>
-			<artifactId>rest-assured</artifactId>
-			<version>${restassured.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-		<!-- jetty server -->
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-servlet</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-    	<artifactId>jetty-util</artifactId>
-			<version>${jetty.version}</version>
-		</dependency>
-
-		<!-- com.atlassian.commonmark -->
-		<dependency>
-			<groupId>com.atlassian.commonmark</groupId>
-			<artifactId>commonmark</artifactId>
-			<version>${commonmark.version}</version>
-		</dependency>
+    </properties>
 
 
-		<!-- Arquillian -->
-		<dependency>
-			<groupId>org.jboss.arquillian.core</groupId>
-			<artifactId>arquillian-core-api</artifactId>
-			<version>1.4.0.Final</version>
-			<scope>test</scope>
-		</dependency>
+    <dependencyManagement>
+        <dependencies>
+            <!-- JBoss distributes a complete set of Java EE 8 APIs including a Bill
+                of Materials (BOM). A BOM specifies the versions of a "stack" (or a collection)
+                of artifacts -->
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-javaee8-with-tools</artifactId>
+                <version>${version.jboss.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-		<dependency>
-			<groupId>org.jboss.arquillian.junit</groupId>
-			<artifactId>arquillian-junit-container</artifactId>
-			<version>1.4.0.Final</version>
-		</dependency>
+    <dependencies>
 
-		<dependency>
-		    <groupId>org.jboss.shrinkwrap.resolver</groupId>
-		    <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
-				<version>3.1.3</version>
-		    <scope>test</scope>
-		</dependency>
+        <!-- First declare the APIs we depend on and need for compilation. All
+            of them are provided by JBoss WildFly -->
 
-		<dependency>
-		    <groupId>org.jboss.weld.servlet</groupId>
-		    <artifactId>weld-servlet-core</artifactId>
-		    <version>3.0.5.Final</version>
-		</dependency>
+        <!-- Import the CDI API, we use provided scope as the API is included in
+            JBoss WildFly -->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-	</dependencies>
+        <!-- Import the Common Annotations API (JSR-250), we use provided scope
+            as the API is included in JBoss WildFly -->
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.3_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-	<build>
-		<finalName>ltr-jaxrs-groovy</finalName>
+        <!-- Import the JAX-RS API, we use provided scope as the API is included
+            in JBoss WildFly -->
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>src/main/webapp</directory>
-			</resource>
-		</resources>
+        <!-- Needed for running tests (you may also use TestNG) -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-		<plugins>
+        <dependency>
+            <groupId>org.jboss.spec.javax.ws.rs</groupId>
+            <artifactId>jboss-jaxrs-api_2.1_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
-					<compilerArgument>-Xlint:deprecation</compilerArgument>
-				</configuration>
-			</plugin>
+        <dependency>
+            <groupId>org.jboss.spec.javax.xml.bind</groupId>
+            <artifactId>jboss-jaxb-api_2.3_spec</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>3.2.2</version>
-			</plugin>
+        <!-- Arquillian allows you to test enterprise code such as EJBs and Transactional(JTA)
+            JPA from JUnit/TestNG -->
+        <dependency>
+          <groupId>org.jboss.arquillian.junit</groupId>
+          <artifactId>arquillian-junit-container</artifactId>
+          <scope>test</scope>
+        </dependency>
 
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>${jetty.version}</version>
-				<configuration>
-					<httpConnector>
-						<port>8680</port>
-					</httpConnector>
-					<scanIntervalSeconds>5000</scanIntervalSeconds>
-				</configuration>
-			</plugin>
+        <dependency>
+          <groupId>org.jboss.arquillian.protocol</groupId>
+          <artifactId>arquillian-protocol-servlet</artifactId>
+          <scope>test</scope>
+        </dependency>
 
-			<plugin>
-		    <groupId>org.apache.maven.plugins</groupId>
-		    <artifactId>maven-surefire-plugin</artifactId>
-		    <version>2.22.0</version>
-		    <dependencies>
-		      <dependency>
-		        <groupId>org.apache.maven.surefire</groupId>
-		        <artifactId>surefire-junit47</artifactId>
-		        <version>2.22.1</version>
-		      </dependency>
-		    </dependencies>
+        <dependency>
+            <groupId>org.jboss.shrinkwrap.resolver</groupId>
+            <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-				<configuration>
-					<systemPropertyVariables>
-						<jboss.home>${project.basedir}/target/wildfly-14.0.1.Final</jboss.home>
-						<module.path>${project.basedir}/target/wildfly-14.0.1.Final/modules</module.path>
-					</systemPropertyVariables>
-					<redirectTestOutputToFile>false</redirectTestOutputToFile>
-				</configuration>
 
-		  </plugin>
 
-		</plugins>
-	</build>
+        <!-- slf4j -->
+        <dependency>
+    			<groupId>org.slf4j</groupId>
+    			<artifactId>slf4j-api</artifactId>
+    			<version>${slf4j.version}</version>
+    		</dependency>
 
-	<profiles>
-		<profile>
-			<id>wildfly-managed</id>
+    		<dependency>
+    			<groupId>org.slf4j</groupId>
+    			<artifactId>slf4j-simple</artifactId>
+    			<version>${slf4j.version}</version>
+    		</dependency>
 
-			<activation>
-				<activeByDefault>true</activeByDefault>
-				<property>
-					<name>arquillian</name>
-					<value>wildfly-managed</value>
-				</property>
-			</activation>
+        <!-- Groovy -->
+        <dependency>
+    		    <groupId>org.codehaus.groovy</groupId>
+    		    <artifactId>groovy</artifactId>
+    		    <version>${groovy.version}</version>
+    		</dependency>
 
-			<dependencies>
-				<dependency>
-					<groupId>org.wildfly</groupId>
-					<artifactId>wildfly-arquillian-container-managed</artifactId>
-					<version>8.2.1.Final</version>
-				</dependency>
-				<dependency>
-					<groupId>org.wildfly</groupId>
-					<artifactId>wildfly-embedded</artifactId>
-					<version>8.2.0.Final</version>
-					<exclusions>
-						<exclusion>
-							<groupId>sun.jdk</groupId>
-							<artifactId>jconsole</artifactId>
-						</exclusion>
-					</exclusions>
-				</dependency>
-			</dependencies>
-			<build>
-				<plugins>
-							<plugin>
-									<groupId>org.apache.maven.plugins</groupId>
-									<artifactId>maven-dependency-plugin</artifactId>
-									<version>2.8</version>
-									<executions>
-											<execution>
-													<id>unpack</id>
-													<phase>process-test-classes</phase>
-													<goals>
-															<goal>unpack</goal>
-													</goals>
-													<configuration>
-															<artifactItems>
-																	<artifactItem>
-																			<groupId>org.wildfly</groupId>
-																			<artifactId>wildfly-dist</artifactId>
-																			<version>${version.wildfly}</version>
-																			<type>zip</type>
-																			<overWrite>false</overWrite>
-																			<outputDirectory>target</outputDirectory>
-																	</artifactItem>
-															</artifactItems>
-													</configuration>
-											</execution>
-									</executions>
-							</plugin>
-						</plugins>
-			</build>
-		</profile>
-	</profiles>
+        <!-- https://mvnrepository.com/artifact/org.javamoney/moneta -->
+    		<dependency>
+    		    <groupId>org.javamoney</groupId>
+    		    <artifactId>moneta</artifactId>
+    		    <version>${moneta.version}</version>
+    		    <type>pom</type>
+    		</dependency>
 
+        <!-- cucumber dependencies -->
+    		<dependency>
+    	     <groupId>io.cucumber</groupId>
+    			 <artifactId>cucumber-java</artifactId>
+    			 <version>${cucumber.version}</version>
+    		</dependency>
+
+    		<!-- cucumber-junit dependencies -->
+    		<dependency>
+    		   <groupId>io.cucumber</groupId>
+    		   <artifactId>cucumber-junit</artifactId>
+    			 <version>${cucumber.version}</version>
+    		</dependency>
+
+        <!-- rest-assured -->
+        <dependency>
+    			<groupId>io.rest-assured</groupId>
+    			<artifactId>rest-assured</artifactId>
+    			<version>${restassured.version}</version>
+          <scope>test</scope>
+        </dependency>
+
+        <!-- com.atlassian.commonmark -->
+    		<dependency>
+    			<groupId>com.atlassian.commonmark</groupId>
+    			<artifactId>commonmark</artifactId>
+    			<version>${commonmark.version}</version>
+    		</dependency>
+
+    </dependencies>
+
+    <build>
+        <!-- Maven will append the version to the finalName (which is the name
+            given to the generated war, and hence the context root) -->
+        <finalName>${project.artifactId}</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>${version.war.plugin}</version>
+                <configuration>
+                    <!-- Java EE 7 doesn't require web.xml, Maven needs to catch up! -->
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+            <!-- The WildFly plugin deploys your war to a local WildFly container -->
+            <!-- To use, run: mvn package wildfly:deploy -->
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>${version.wildfly.maven.plugin}</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <!-- The default profile skips all tests, though you can tune it to run
+                just unit tests based on a custom pattern -->
+            <!-- Seperate profiles are provided for running all tests, including Arquillian
+                tests that execute in the specified container -->
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>${version.surefire.plugin}</version>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <profile>
+
+            <!-- This profile will start a new WildFly instance, and execute the
+                test, shutting it down when done -->
+            <!-- Run with: mvn clean test -Parq-wildfly-managed -->
+            <id>arq-wildfly-managed</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly</groupId>
+                    <artifactId>wildfly-arquillian-container-managed</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+        <profile>
+            <!-- Arquillian testing profile that executes tests in a
+                remote WildFly instance -->
+            <!-- Run with: mvn clean test -Parq-wildfly-remote -->
+            <id>arq-wildfly-remote</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly.arquillian</groupId>
+                    <artifactId>wildfly-arquillian-container-remote</artifactId>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+
+    </profiles>
 </project>

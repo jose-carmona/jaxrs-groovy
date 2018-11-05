@@ -14,8 +14,7 @@ import org.jose.jaxrs.model.Liquidacion;
 import org.jose.jaxrs.model.LiquidacionImpl;
 import org.jose.jaxrs.model.Test;
 
-
-@Path("/script")
+@Path("/calc")
 public class JaxrsService {
 
 	@GET
