@@ -1,4 +1,4 @@
-package org.jose.jaxrs.model.cucumber;
+package org.jose.jaxrs.model.cucumber.io;
 
 import java.io.File;
 import java.net.URL;
@@ -13,8 +13,9 @@ import cucumber.runtime.io.ZipResourceIterator;
 
 import org.jboss.vfs.VirtualFile;
 
-/*
-  https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html
+/**
+ *
+ * https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html
 
   https://stackoverflow.com/questions/4899371/why-cant-i-open-a-jboss-vfs-url
 
@@ -27,7 +28,7 @@ import org.jboss.vfs.VirtualFile;
   File dir = contentsFile.getParentFile();
   File physicalFile = new File(dir, filename);
   InputStream is = new FileInputStream(physicalFile);
-*/
+ */
 
 /**
  * vfs:/
@@ -36,34 +37,19 @@ public class VfsResourceIteratorFactory implements ResourceIteratorFactory {
 
   @Override
   public boolean isFactoryFor(URL url) {
-    System.out.println(url.getProtocol());
     return ("vfs".equals(url.getProtocol()));
   }
 
   public Iterator<Resource> createJarIterator(URL url, String path, String suffix) {
-
-    URLConnection conn;
-    VirtualFile vf;
-    File file;
-
-    String urlstr = url.toString().substring(0, url.toString().length() - path.length() -2);
-    String jarPath = urlstr.substring(urlstr.lastIndexOf("/"), urlstr.length());
-
-    System.out.println("createJarIterator");
-    System.out.println(url);
-    System.out.println(path);
-    System.out.println(suffix);
-    System.out.println(urlstr);
-    System.out.println(jarPath);
+    String urlRootstr = url.toString().substring(0, url.toString().length() - path.length() -2);
+    String jarFilestr = urlRootstr.substring(urlRootstr.lastIndexOf("/"), urlRootstr.length());
 
     try {
-      conn = new URL(url.toString().substring(0, url.toString().length() - path.length() -2)).openConnection();
-      vf = (VirtualFile)conn.getContent();
+      URLConnection conn = new URL(urlRootstr).openConnection();
+      VirtualFile vf = (VirtualFile)conn.getContent();
+      File file = vf.getPhysicalFile().getParentFile();
 
-      file = vf.getPhysicalFile().getParentFile();
-      System.out.println(file);
-
-      return new ZipResourceIterator(file.getAbsolutePath() + jarPath, path, suffix);
+      return new ZipResourceIterator(file.getAbsolutePath() + jarFilestr, path, suffix);
     }
     catch (Throwable e){
       e.printStackTrace();
@@ -72,35 +58,18 @@ public class VfsResourceIteratorFactory implements ResourceIteratorFactory {
   }
 
   public Iterator<Resource> createFileIterator(URL url, String path, String suffix) {
-    URLConnection conn;
-    VirtualFile vf;
-    File file;
-    File root;
-
-    String urlstrFile = url.toString();
-    String urlstrRoot = url.toString().substring(0, url.toString().length() - path.length() -2);
-
-    System.out.println("createFileIterator");
-    System.out.println(url);
-    System.out.println(path);
-    System.out.println(suffix);
-    System.out.println(urlstrFile);
-    System.out.println(urlstrRoot);
+    String urlFilestr = url.toString();
+    String urlRootstr = urlFilestr.substring(0, urlFilestr.length() - path.length() -2);
 
     try {
-      conn = new URL(urlstrFile).openConnection();
+      URLConnection conn = new URL(urlFilestr).openConnection();
+      VirtualFile vf = (VirtualFile)conn.getContent();
+      File file = vf.getPhysicalFile();
+
+      conn = new URL(urlRootstr).openConnection();
       vf = (VirtualFile)conn.getContent();
+      File root = vf.getPhysicalFile();
 
-      file = vf.getPhysicalFile();
-      System.out.println(file);
-
-      conn = new URL(urlstrRoot).openConnection();
-      vf = (VirtualFile)conn.getContent();
-
-      root = vf.getPhysicalFile();
-      System.out.println(root);
-
-      /* (File root, File file, String suffix) */
       return FileResourceIterator.createClasspathFileResourceIterator(root, file, suffix);
     }
     catch (Throwable e) {
