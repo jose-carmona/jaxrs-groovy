@@ -53,7 +53,7 @@
                 of artifacts -->
             <dependency>
                 <groupId>org.wildfly.bom</groupId>
-                <artifactId>wildfly-javaee8-with-tools</artifactId>
+                  <artifactId>wildfly-javaee8-with-tools</artifactId>
                 <version>${version.jboss.bom}</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -172,6 +172,14 @@
     		   <artifactId>cucumber-junit</artifactId>
     			 <version>${cucumber.version}</version>
     		</dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jboss/jboss-vfs -->
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-vfs</artifactId>
+            <version>3.2.14.Final</version>
+            <scope>provided</scope>
+        </dependency>
 
         <!-- rest-assured -->
         <dependency>

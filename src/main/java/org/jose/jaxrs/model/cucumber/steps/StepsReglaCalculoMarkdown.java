@@ -104,6 +104,7 @@ public class StepsReglaCalculoMarkdown {
 
   @Dado("que tenemos cargada la regla de calculo a comprobar")
   public void que_tenemos_cargada_la_regla_de_calculo_a_comprobar() {
+    assertNotNull(reglaCalculo2Test);
     String textoReglaCalculo = reglaCalculo2Test.getReglaCalculo();
     assertNotNull(textoReglaCalculo);
     reglaCalculo.setMarkdown(textoReglaCalculo);

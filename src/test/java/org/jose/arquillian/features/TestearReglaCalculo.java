@@ -43,6 +43,10 @@ public class TestearReglaCalculo {
             .addPackages(true,"org.jose")
             .addAsLibraries(pom.resolve("io.cucumber:cucumber-junit").withTransitivity().asFile())
             .addAsLibraries(pom.resolve("io.cucumber:cucumber-java").withTransitivity().asFile())
+            .addAsLibraries(pom.resolve("com.atlassian.commonmark:commonmark").withTransitivity().asFile())
+            .addAsLibraries(pom.resolve("org.codehaus.groovy:groovy").withTransitivity().asFile())
+            .addAsLibraries(pom.resolve("org.javamoney:moneta:pom:?").withTransitivity().asFile())
+            .addAsManifestResource("META-INF/services/cucumber.runtime.io.ResourceIteratorFactory", "services/cucumber.runtime.io.ResourceIteratorFactory")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
   }
 
@@ -51,6 +55,9 @@ public class TestearReglaCalculo {
 
   @Test
   public void ejecucion_de_test_en_cucumber_embebido_en_la_aplicacion() throws Exception {
+    // CDI funcionando
+    assertNotNull(reglaCalculo2Test);
+
     // dado que tenemos la siguiente regla de cálculo
     reglaCalculo2Test.setReglaCalculo("r.setPrincipal( o[\"concepto1.ml\"] * t[\"concepto1.precio\"] )" );
 
@@ -76,13 +83,7 @@ public class TestearReglaCalculo {
     // cuando ejecuto el test de la regla de regla de cálculo
     RuntimeAdapter runtime = new RuntimeAdapter();
 
-    try {
-      runtime.test(features);
-    }
-    catch (Throwable e){
-      e.printStackTrace();
-      //throw e;
-    }
+    runtime.test(features);
 
     // entonces el resultado del test debe ser 0
     assertTrue(runtime.exitStatus == 0);

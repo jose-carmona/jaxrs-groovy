@@ -10,7 +10,7 @@ public class RuntimeAdapter{
   public void test(FeatureSupplier features) {
     final Runtime runtime = Runtime.builder()
                     .withFeatureSupplier(features)
-                    .withArg("--glue org.jose.jaxrs.cucumber.steps")
+                    .withArg("--glue org.jose.jaxrs.model.cucumber.steps")
                     .build();
     runtime.run();
     exitStatus = runtime.exitStatus();
