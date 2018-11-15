@@ -39,10 +39,11 @@
         <slf4j.version>1.7.25</slf4j.version>
         <groovy.version>2.5.3</groovy.version>
         <commonmark.version>0.11.0</commonmark.version>
-        <cucumber.version>4.0.2</cucumber.version>
+        <cucumber.version>4.2.0</cucumber.version>
         <moneta.version>1.3</moneta.version>
         <restassured.version>3.1.1</restassured.version>
 
+        <weld-se.version>2.4.4.Final</weld-se.version>
     </properties>
 
 
@@ -172,6 +173,12 @@
     		   <artifactId>cucumber-junit</artifactId>
     			 <version>${cucumber.version}</version>
     		</dependency>
+
+        <dependency>
+          <groupId>org.jboss.weld.se</groupId>
+          <artifactId>weld-se</artifactId>
+          <version>${weld-se.version}</version>
+        </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.jboss/jboss-vfs -->
         <dependency>

@@ -1,12 +1,12 @@
 package org.jose.jaxrs.model.cucumber.steps;
 
-import javax.inject.Inject;
-
 import java.math.BigDecimal;
 import java.util.Map;
+import java.io.Serializable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.inject.Inject;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 
 import org.javamoney.moneta.Money;
 
@@ -22,16 +22,16 @@ import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 import org.jose.jaxrs.model.TarifaSimple;
 import org.jose.jaxrs.model.cucumber.ReglaCalculoMarkdownToTest;
 
-public class StepsReglaCalculoMarkdown {
-
-  final Logger logger = LoggerFactory.getLogger(StepsReglaCalculoMarkdown.class);
+@SessionScoped
+public class StepsReglaCalculoMarkdown implements Serializable {
 
   private ReglaCalculoMarkdown reglaCalculo;
 
   @Inject
   private ReglaCalculoMarkdownToTest reglaCalculo2Test;
 
-  public StepsReglaCalculoMarkdown() {
+  @PostConstruct
+  public void init() {
     reglaCalculo = new ReglaCalculoMarkdown();
   }
 

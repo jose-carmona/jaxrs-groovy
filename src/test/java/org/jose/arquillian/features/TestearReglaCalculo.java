@@ -41,13 +41,13 @@ public class TestearReglaCalculo {
 
     return ShrinkWrap.create(WebArchive.class)
             .addPackages(true,"org.jose")
-            .addAsLibraries(pom.resolve("io.cucumber:cucumber-junit").withTransitivity().asFile())
+            .addPackages(true,"cucumber.runtime.cdi")
+            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
+            .addAsManifestResource("META-INF/services/cucumber.runtime.io.ResourceIteratorFactory", "services/cucumber.runtime.io.ResourceIteratorFactory")
             .addAsLibraries(pom.resolve("io.cucumber:cucumber-java").withTransitivity().asFile())
             .addAsLibraries(pom.resolve("com.atlassian.commonmark:commonmark").withTransitivity().asFile())
             .addAsLibraries(pom.resolve("org.codehaus.groovy:groovy").withTransitivity().asFile())
-            .addAsLibraries(pom.resolve("org.javamoney:moneta:pom:?").withTransitivity().asFile())
-            .addAsManifestResource("META-INF/services/cucumber.runtime.io.ResourceIteratorFactory", "services/cucumber.runtime.io.ResourceIteratorFactory")
-            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+            .addAsLibraries(pom.resolve("org.javamoney:moneta:pom:?").withTransitivity().asFile());
   }
 
   @Inject
@@ -59,7 +59,10 @@ public class TestearReglaCalculo {
     assertNotNull(reglaCalculo2Test);
 
     // dado que tenemos la siguiente regla de cálculo
-    reglaCalculo2Test.setReglaCalculo("r.setPrincipal( o[\"concepto1.ml\"] * t[\"concepto1.precio\"] )" );
+    String textoReglaCalculo = "```" + System.lineSeparator() +
+      "r.setPrincipal( o[\"concepto1.ml\"] * t[\"concepto1.precio\"] )" + System.lineSeparator() +
+      "```" + System.lineSeparator();
+    reglaCalculo2Test.setReglaCalculo(textoReglaCalculo);
 
     // dado que tenemos el siguiente test en gherkin
     String textoTest = "# language: es "+ System.lineSeparator() +

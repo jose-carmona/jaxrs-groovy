@@ -1,6 +1,7 @@
 package org.jose.bdd.steps.reglacalculo;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 import org.jose.jaxrs.model.TarifaSimple;
 import org.jose.jaxrs.model.cucumber.ReglaCalculoMarkdownToTest;
 
+@Singleton
 public class StepsReglaCalculoMarkdown {
 
   final Logger logger = LoggerFactory.getLogger(StepsReglaCalculoMarkdown.class);
