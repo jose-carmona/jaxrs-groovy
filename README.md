@@ -2,7 +2,7 @@
 
 # ltr-jaxrs-groovy
 
-Prueba de concepto de servicio REST para el cálculo de liquidaciones tributaria.
+Prueba de concepto de servicio REST para el cálculo de liquidaciones tributarias.
 
 ### Objetivos
 
@@ -15,6 +15,7 @@ Prueba de concepto de servicio REST para el cálculo de liquidaciones tributaria
 * Markdown con Commonmark
 * Groovy
 * Test con cucumber
+* Test con Arquillian
 
 ### Imagen Docker de WildFly para tests
 

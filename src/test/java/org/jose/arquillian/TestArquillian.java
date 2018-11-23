@@ -3,12 +3,11 @@ package org.jose.arquillian;
 import java.net.URL;
 import java.io.File;
 
-import javax.inject.Inject;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.core.MediaType;
 
-import javax.ws.rs.ApplicationPath;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.javamoney.moneta.Money;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -27,20 +26,21 @@ import org.junit.runner.RunWith;
 
 import org.junit.Assert;
 
-import io.restassured.specification.RequestSpecification;
 import io.restassured.response.Response;
-import io.restassured.http.ContentType;
-
+// import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
+
+import static org.junit.Assert.*;
+
+import org.jose.jaxrs.model.JsonLiq;
+import org.jose.jaxrs.api.ClientCustomJsonProvider;
 
 @RunWith(Arquillian.class)
 public class TestArquillian {
 
   private static final String RESOURCE_PREFIX = "api";
-
-  private final Logger logger = LoggerFactory.getLogger(TestArquillian.class);
 
   Response response;
 
@@ -51,8 +51,11 @@ public class TestArquillian {
 
     return ShrinkWrap.create(WebArchive.class)
             .addPackages(true,"org.jose")
+            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
             .addAsLibraries(pom.resolve("org.codehaus.groovy:groovy").withTransitivity().asFile())
-            .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml");
+            .addAsLibraries(pom.resolve("com.fasterxml.jackson.core:jackson-databind").withTransitivity().asFile())
+            .addAsLibraries(pom.resolve("org.zalando:jackson-datatype-money").withTransitivity().asFile())
+            .addAsLibraries(pom.resolve("org.javamoney:moneta:pom:?").withTransitivity().asFile());
   }
 
   @ArquillianResource
@@ -61,15 +64,42 @@ public class TestArquillian {
   @Test
   @RunAsClient
   public void testOnClient() {
-    logger.debug("testOnClient");
     baseURI = deploymentUrl.toString() + RESOURCE_PREFIX;
-    System.out.println("baseURI" + baseURI);
     response = given()
                   .contentType("application/json")
                   .when()
-                  .get("/calc/test");
+                  .get("/test/testMinGroovy");
 
     response.then().assertThat().statusCode(200);
     response.then().body("test", equalTo("4"));
   }
+
+  @Test
+  @RunAsClient
+  public void testLiquidacionOnClient() {
+    baseURI = deploymentUrl.toString() + RESOURCE_PREFIX;
+    String target = "/test/testLiquidacion";
+
+    response = given()
+                  .contentType("application/json")
+                .when()
+                  .get(target);
+
+    response.then().assertThat().statusCode(200);
+    response.then().log().body();
+    // response.then().body("principal.amount", equalTo("100.01"));
+
+    // cliente jaxrs
+    Client client = ClientBuilder.newClient().register(ClientCustomJsonProvider.class);
+
+
+    JsonLiq l = client.target(baseURI + target)
+                  .request(MediaType.APPLICATION_JSON)
+                  .get(JsonLiq.class);
+
+    assertTrue(l.getPrincipal().compareTo(Money.of(100.01,"EUR")) == 0);
+
+    client.close();
+  }
+
 }

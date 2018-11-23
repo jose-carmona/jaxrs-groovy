@@ -5,9 +5,6 @@ import java.io.File;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -31,8 +28,6 @@ import org.jose.jaxrs.model.cucumber.RuntimeAdapter;
 
 @RunWith(Arquillian.class)
 public class TestearReglaCalculo {
-
-  final Logger logger = LoggerFactory.getLogger(TestearReglaCalculo.class);
 
   @Deployment
   public static Archive<?> createDeployment() {
@@ -88,7 +83,7 @@ public class TestearReglaCalculo {
 
     runtime.test(features);
 
-    // entonces el resultado del test debe ser 0
+    // entonces el resultado del test debe ser correcto
     assertTrue(runtime.exitStatus == 0);
   }
 

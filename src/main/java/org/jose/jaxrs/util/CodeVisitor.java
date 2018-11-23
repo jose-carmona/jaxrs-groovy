@@ -18,6 +18,5 @@ public class CodeVisitor extends AbstractVisitor {
       this.code += fencedCodeBlock.getLiteral();
     }
 
-    //visitChildren(fencedCodeBlock);
   }
 }

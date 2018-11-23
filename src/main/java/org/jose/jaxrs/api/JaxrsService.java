@@ -9,18 +9,20 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.javamoney.moneta.Money;
+
 import org.jose.jaxrs.model.GroovyScript;
-import org.jose.jaxrs.model.Liquidacion;
+import org.jose.jaxrs.model.JsonLiq;
 import org.jose.jaxrs.model.LiquidacionImpl;
 import org.jose.jaxrs.model.Test;
 
-@Path("/calc")
+@Path("/test")
 public class JaxrsService {
 
 	@GET
-	@Path("/test")
+	@Path("/testMinGroovy")
 	@Produces({MediaType.APPLICATION_JSON})
-	public Test s1() {
+	public Test testMinGroovy() {
 
 		GroovyScript s1 = new GroovyScript();
 
@@ -31,6 +33,19 @@ public class JaxrsService {
 
 		Test r = new Test();
 		r.test = s1.getResultado();
+
+		return r;
+	}
+
+	@GET
+	@Path("/testLiquidacion")
+	@Produces({MediaType.APPLICATION_JSON})
+	public JsonLiq testLiquidacion() {
+
+
+		JsonLiq r = new JsonLiq();
+		r.setPrincipal(Money.of(100.01, "EUR"));
+		r.total = Money.of(29.95, "EUR");
 
 		return r;
 	}

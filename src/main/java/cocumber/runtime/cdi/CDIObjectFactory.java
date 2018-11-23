@@ -10,18 +10,30 @@ import java.util.Map;
 
 import javax.enterprise.inject.spi.CDI;
 
+/**
+ * Object Factory con injección de dependincias en servidor
+ * @autor jose_carmona
+ *
+ * La factoría de objetos tiene 2 modos de funcionamiento: cuando cucumber es
+ * utilizado para test fuera de servidor de aplicaciones no usa injección de
+ * dependencia y es una copia del cucumber.api.java.DefaultObjectFactory; cuando
+ * es usado desde cucumber como un servicio de la apliación en el contenedor,
+ * entonces usa CDI para injección de dependencias y es está basado en
+ * cucumber.runtime.java.weld.WeldFactory que usa Weld SE.
+ */
 public class CDIObjectFactory implements ObjectFactory {
 
   private final Map<Class<?>, Object> instances = new HashMap<Class<?>, Object>();
 
-  // accedemos a CDI vía clase estática en spi
   private CDI<Object> cdi;
 
   public CDIObjectFactory() {
     try {
+      // accedemos a CDI vía clase estática en spi
       cdi = CDI.current();
     }
     catch (Exception err) {
+      // no hay CDI, entonces no hay injección de dependiencias
     }
   }
 
@@ -33,6 +45,7 @@ public class CDIObjectFactory implements ObjectFactory {
   @Override
   public void stop() {
     // nada que hacer. CDI es manejado por el servidor EE
+    // si no tenemos CDI, entonces limpiamos los objetos instanciados
     if (cdi==null) {
       instances.clear();
     }
@@ -46,6 +59,7 @@ public class CDIObjectFactory implements ObjectFactory {
 
   @Override
   public <T> T getInstance(final Class<T> type) {
+    // si no tenemos CDI, buscanmos la instancia en la cache o la instanciamos
     if  (cdi==null) {
       T instance = type.cast(instances.get(type));
       if (instance == null) {
@@ -53,9 +67,11 @@ public class CDIObjectFactory implements ObjectFactory {
       }
       return instance;
     }
+    // si tenemos CDI, pedimos la instacia de la clase a CDI
     return cdi.select(type).get();
   }
 
+  // ver cucumber.api.java.DefaultObjectFactory
   private <T> T cacheNewInstance(Class<T> type) {
       try {
           Constructor<T> constructor = type.getConstructor();

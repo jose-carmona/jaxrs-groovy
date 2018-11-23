@@ -5,7 +5,6 @@ import java.util.Map;
 import java.io.Serializable;
 
 import javax.inject.Inject;
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 
 import org.javamoney.moneta.Money;
@@ -22,6 +21,11 @@ import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 import org.jose.jaxrs.model.TarifaSimple;
 import org.jose.jaxrs.model.cucumber.ReglaCalculoMarkdownToTest;
 
+/**
+ * Pasos para el test de Reglas de Cálculo.
+ * La clase está situada aquí y no en la rema test, para permitir el uso default:
+ * los pasos en cucumber como servicio en la aplicación.
+ */
 @SessionScoped
 public class StepsReglaCalculoMarkdown implements Serializable {
 
@@ -30,8 +34,7 @@ public class StepsReglaCalculoMarkdown implements Serializable {
   @Inject
   private ReglaCalculoMarkdownToTest reglaCalculo2Test;
 
-  @PostConstruct
-  public void init() {
+  public StepsReglaCalculoMarkdown() {
     reglaCalculo = new ReglaCalculoMarkdown();
   }
 

@@ -14,20 +14,12 @@ import cucumber.runtime.io.ZipResourceIterator;
 import org.jboss.vfs.VirtualFile;
 
 /**
- *
- * https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html
-
-  https://stackoverflow.com/questions/4899371/why-cant-i-open-a-jboss-vfs-url
-
-  import org.jboss.vfs.*;
-
-  String filename = ...;
-  URLConnection conn = new URL("vfs:/...").openConnection();
-  VirtualFile vf = (VirtualFile)conn.getContent();
-  File contentsFile = vf.getPhysicalFile();
-  File dir = contentsFile.getParentFile();
-  File physicalFile = new File(dir, filename);
-  InputStream is = new FileInputStream(physicalFile);
+ * ResourceIteratorFactory sobre VFS.
+ * WildFly usa VFS en el despliegue de las aplicaciones. Ésta clase permite a
+ * cucumber acceder a recuersos en VFS, para luego usar Iterators propios de
+ * cucumber.
+ * La Factoría es cargada mediante ServiceLoader:
+ *   https://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html
  */
 
 /**

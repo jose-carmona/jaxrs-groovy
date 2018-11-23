@@ -51,7 +51,7 @@ Característica: Uso de markdown con scripts groovy
   Escenario: Establecer variables java que puedan ser usadas en la regla de cálculo
     Dado que tenemos la siguiente regla de cálculo:
     """
-    # Regla de cálculo con varables
+    # Regla de cálculo con variables
     ```
     (a + b) * 2
     ```

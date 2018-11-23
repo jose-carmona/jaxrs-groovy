@@ -14,7 +14,9 @@ import org.junit.runner.RunWith;
               "classpath:cucumber/tarifa/",
               "classpath:cucumber/tests/"
              },
-  glue = {"org.jose.bdd.steps.reglacalculo"}
+  glue = {"org.jose.jaxrs.model.cucumber.steps",
+          "org.jose.bdd.steps.reglacalculo"
+          }
 )
 
 public class RunReglaCalculoMarkdownTest {

@@ -2,7 +2,7 @@
 Característica: La reglas de cálculo deben acceder a datos de tarifas
   Como responsable de las reglas de cálculo
   Quiero acceder a los datos de tarifas
-  Para para dichos datos no estén dentro de las reglas de cálculo y, por tanto,
+  Para que dichos datos no estén dentro de las reglas de cálculo y, por tanto,
     las reglas de cálculo no necesiten modificarse cada vez que se actualicen
     los precios y/o límites.
 
