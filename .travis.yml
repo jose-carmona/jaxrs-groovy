@@ -1,7 +1,23 @@
+sudo: required
+
 language: java
 
 jdk:
   - oraclejdk8
 
+services:
+  - docker
+
+install:
+  - cd docker
+  - docker build --tag=wildfly-tests .
+
+before_script:
+  - docker run -it -d  -p 8080:8080 -p 9990:9990 --name wildfly-tests wildfly-tests
+
 script:
-  - mvn install 
+  - mvn clean test -Parq-wildfly-remote
+
+notifications:
+  email:
+    - j.carmona.n@gmail.com
