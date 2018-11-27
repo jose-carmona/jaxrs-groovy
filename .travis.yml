@@ -9,8 +9,7 @@ services:
   - docker
 
 install:
-  - cd docker
-  - docker build --tag=wildfly-tests .
+  - docker build --tag=wildfly-tests docker
 
 before_script:
   - docker run -it -d  -p 8080:8080 -p 9990:9990 --name wildfly-tests wildfly-tests
