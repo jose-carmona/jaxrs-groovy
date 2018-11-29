@@ -90,7 +90,7 @@ public class StepsReglaCalculoMarkdown implements Serializable {
 
   @Entonces("la liquidación debe tener el siguiente conjunto de conceptos:")
   public void la_liquidacion_debe_tener_el_siguiente_conjunto_de_conceptos(Map<String, BigDecimal> conceptosEsperados) {
-    assertEquals(conceptosEsperados, reglaCalculo.getLiqResultado().getConceptos());
+    assertEquals(conceptosEsperados, reglaCalculo.getLiqResultado().getC());
   }
 
   @Dado("que tenemos el siguiente markdown global:")

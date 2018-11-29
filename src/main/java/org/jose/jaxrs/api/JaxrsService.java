@@ -12,9 +12,10 @@ import javax.ws.rs.core.MediaType;
 import org.javamoney.moneta.Money;
 
 import org.jose.jaxrs.model.GroovyScript;
-import org.jose.jaxrs.model.JsonLiq;
+import org.jose.jaxrs.model.Liquidacion;
 import org.jose.jaxrs.model.LiquidacionImpl;
 import org.jose.jaxrs.model.Test;
+import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 
 @Path("/test")
 public class JaxrsService {
@@ -40,12 +41,22 @@ public class JaxrsService {
 	@GET
 	@Path("/testLiquidacion")
 	@Produces({MediaType.APPLICATION_JSON})
-	public JsonLiq testLiquidacion() {
+	public Liquidacion testLiquidacion() {
 
+		String textoReglaCalculo = "```" + System.lineSeparator() +
+			"r.c << [ \"Concepto 1\" : 10.01]" + System.lineSeparator() +
+			"r.c << [ \"Concepto 2\" : 20.00]" + System.lineSeparator() +
+			"r.c << [ \"Concepto 3\" : 70.00]" + System.lineSeparator() +
+			"r.setBaseImponible(r.c.collect().value.sum())" + System.lineSeparator() +
+			"r.setTipoIva(10)" + System.lineSeparator() +
+			"r.aplicarIva()" + System.lineSeparator() +
+			"```" + System.lineSeparator();
 
-		JsonLiq r = new JsonLiq();
-		r.setPrincipal(Money.of(100.01, "EUR"));
-		r.total = Money.of(29.95, "EUR");
+		ReglaCalculoMarkdown regla = new ReglaCalculoMarkdown();
+		regla.setMarkdown(textoReglaCalculo);
+		regla.calcular();
+
+		Liquidacion r = regla.getLiqResultado();
 
 		return r;
 	}

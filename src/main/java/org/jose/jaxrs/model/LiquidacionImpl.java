@@ -12,12 +12,10 @@ import javax.money.RoundingQueryBuilder;
 
 import org.javamoney.moneta.Money;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 public class LiquidacionImpl implements Liquidacion {
-
-  final Logger logger = LoggerFactory.getLogger(LiquidacionImpl.class);
 
   public LinkedHashMap c;  // conceptos de la Liquidación
 
@@ -34,7 +32,7 @@ public class LiquidacionImpl implements Liquidacion {
     rounding = Monetary.getRounding(RoundingQueryBuilder.of().setScale(2).set(RoundingMode.HALF_UP).build());
   }
 
-  public Map getConceptos() {
+  public Map getC() {
     return c;
   }
 
@@ -42,8 +40,14 @@ public class LiquidacionImpl implements Liquidacion {
     return principal;
   }
 
-  public void setPrincipal( BigDecimal importe ) {
-    principal = Money.of( importe, "EUR" );
+  @JsonSetter
+  public void setPrincipal(MonetaryAmount importe) {
+    principal = importe;
+    principal = principal.with(rounding);
+  }
+
+  public void setPrincipal(BigDecimal importe) {
+    principal = Money.of(importe, "EUR");
     principal = principal.with(rounding);
   }
 
@@ -51,8 +55,14 @@ public class LiquidacionImpl implements Liquidacion {
     return baseImponible;
   }
 
-  public void setBaseImponible( BigDecimal importe ) {
-    baseImponible = Money.of( importe, "EUR");
+  @JsonSetter
+  public void setBaseImponible(MonetaryAmount importe) {
+    baseImponible = importe;
+    baseImponible = baseImponible.with(rounding);
+  }
+
+  public void setBaseImponible(BigDecimal importe) {
+    baseImponible = Money.of(importe, "EUR");
     baseImponible = baseImponible.with(rounding);
   }
 
@@ -60,12 +70,16 @@ public class LiquidacionImpl implements Liquidacion {
     return iva;
   }
 
-  public void setTipoIva( int tipoIva ) {
-    this.tipoIva = tipoIva;
+  public void setIva(MonetaryAmount importe) {
+    iva = importe;
   }
 
   public int getTipoIva() {
     return tipoIva;
+  }
+
+  public void setTipoIva(int tipoIva) {
+    this.tipoIva = tipoIva;
   }
 
   public void aplicarIva() {

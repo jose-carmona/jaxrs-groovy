@@ -34,7 +34,7 @@ import static org.hamcrest.Matchers.*;
 
 import static org.junit.Assert.*;
 
-import org.jose.jaxrs.model.JsonLiq;
+import org.jose.jaxrs.model.LiquidacionImpl;
 import org.jose.jaxrs.api.ClientCustomJsonProvider;
 
 @RunWith(Arquillian.class)
@@ -52,6 +52,7 @@ public class TestArquillian {
     return ShrinkWrap.create(WebArchive.class)
             .addPackages(true,"org.jose")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
+            .addAsLibraries(pom.resolve("com.atlassian.commonmark:commonmark").withTransitivity().asFile())
             .addAsLibraries(pom.resolve("org.codehaus.groovy:groovy").withTransitivity().asFile())
             .addAsLibraries(pom.resolve("com.fasterxml.jackson.core:jackson-databind").withTransitivity().asFile())
             .addAsLibraries(pom.resolve("org.zalando:jackson-datatype-money").withTransitivity().asFile())
@@ -93,11 +94,14 @@ public class TestArquillian {
     Client client = ClientBuilder.newClient().register(ClientCustomJsonProvider.class);
 
 
-    JsonLiq l = client.target(baseURI + target)
+    LiquidacionImpl l = client.target(baseURI + target)
                   .request(MediaType.APPLICATION_JSON)
-                  .get(JsonLiq.class);
+                  .get(LiquidacionImpl.class);
 
-    assertTrue(l.getPrincipal().compareTo(Money.of(100.01,"EUR")) == 0);
+    assertTrue(l.getPrincipal().compareTo(Money.of(110.01,"EUR")) == 0);
+    assertTrue(l.getC().containsKey("Concepto 1"));
+    assertTrue(l.getC().containsKey("Concepto 2"));
+    assertTrue(l.getC().containsKey("Concepto 3"));
 
     client.close();
   }
