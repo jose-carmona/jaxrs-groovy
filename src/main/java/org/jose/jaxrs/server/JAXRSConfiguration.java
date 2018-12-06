@@ -7,7 +7,7 @@ import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
 import org.jose.jaxrs.api.CustomJsonProvider;
-import org.jose.jaxrs.api.JaxrsService;
+import org.jose.jaxrs.api.JaxrsTestService;
 
 /**
  * Configures a JAX-RS endpoint
@@ -23,7 +23,7 @@ public class JAXRSConfiguration extends Application {
       Set<Class<?>> classes = new HashSet<Class<?>>();
 
       classes.add(CustomJsonProvider.class);
-      classes.add(JaxrsService.class);
+      classes.add(JaxrsTestService.class);
 
       return classes;
   }

@@ -18,7 +18,7 @@ import org.jose.jaxrs.model.Test;
 import org.jose.jaxrs.model.ReglaCalculoMarkdown;
 
 @Path("/test")
-public class JaxrsService {
+public class JaxrsTestService {
 
 	@GET
 	@Path("/testMinGroovy")
@@ -38,6 +38,14 @@ public class JaxrsService {
 		return r;
 	}
 
+	/**
+	 * Servicio Jaxrs sobre Regla de Cálculo que genera una liquidación patrón
+	 * Incluye:
+	 * 		- Principal
+	 *		- IVA (Base Imponible, Tipo de IVA e IVA)
+	 *		- Conceptos
+	 * Salida en JSON
+	 */
 	@GET
 	@Path("/testLiquidacion")
 	@Produces({MediaType.APPLICATION_JSON})

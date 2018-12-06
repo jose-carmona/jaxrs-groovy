@@ -75,30 +75,48 @@ public class TestArquillian {
     response.then().body("test", equalTo("4"));
   }
 
+  /**
+   * Característica: POJO liquidación resultado en el lado cliente
+   *  Como integrador
+   *  Quiero un objeto plano java (POJO) que refleje el resultado de la liquidación
+   *  Para que el API sea sencillo de integrar en otras aplicaciones
+   *  Tener en cuenta:
+   *    - servicio jaxrs
+   *    - la liquidación en formato json
+   *    - se traduce a POJO
+   */
   @Test
   @RunAsClient
-  public void testLiquidacionOnClient() {
+  public void testLiquidacionPatronOnClient() {
+
+    // DAda que tenemos un servicio jaxrs que devuelve una liquidación patrón
     baseURI = deploymentUrl.toString() + RESOURCE_PREFIX;
     String target = "/test/testLiquidacion";
 
+    // cuando pruebo el servicio jaxrs
     response = given()
                   .contentType("application/json")
                 .when()
                   .get(target);
 
+    // entonces el servicio responde correctamente
     response.then().assertThat().statusCode(200);
+
+    // log
     response.then().log().body();
-    // response.then().body("principal.amount", equalTo("100.01"));
 
     // cliente jaxrs
     Client client = ClientBuilder.newClient().register(ClientCustomJsonProvider.class);
 
-
+    // cuando invoco el servicio con un cliente jaxrs y deserializo la Liquidación
     LiquidacionImpl l = client.target(baseURI + target)
                   .request(MediaType.APPLICATION_JSON)
                   .get(LiquidacionImpl.class);
 
+    // entonces la liquidación debe ser la esperada
     assertTrue(l.getPrincipal().compareTo(Money.of(110.01,"EUR")) == 0);
+    assertTrue(l.getBaseImponible().compareTo(Money.of(100.01,"EUR")) == 0);
+    assertTrue(l.getTipoIva() == 10);
     assertTrue(l.getC().containsKey("Concepto 1"));
     assertTrue(l.getC().containsKey("Concepto 2"));
     assertTrue(l.getC().containsKey("Concepto 3"));

@@ -16,7 +16,7 @@ Característica: el objeto es la base para el cálculo de la liquidación
       """
       # Regla de cálculo
 
-      Regla de cálculo que accede
+      Regla de cálculo que accede al objeto
       ```
       r.setPrincipal( o["concepto1.ml"] * 2 + o["concepto2.m2"] * 3 )
       ```
