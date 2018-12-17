@@ -10,7 +10,6 @@ public class CustomJsonProvider implements ContextResolver<ObjectMapper> {
    private final ObjectMapper mapper;
 
    public CustomJsonProvider() {
-     System.out.println("CustomJsonProvider");
      mapper = new ObjectMapper();
      mapper.findAndRegisterModules();
    }

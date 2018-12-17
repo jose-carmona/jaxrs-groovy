@@ -27,7 +27,6 @@ import org.junit.runner.RunWith;
 import org.junit.Assert;
 
 import io.restassured.response.Response;
-// import io.restassured.http.ContentType;
 import static io.restassured.RestAssured.*;
 import static io.restassured.matcher.RestAssuredMatchers.*;
 import static org.hamcrest.Matchers.*;
@@ -50,7 +49,10 @@ public class TestArquillian {
     PomEquippedResolveStage pom = Maven.configureResolver().workOffline().loadPomFromFile("pom.xml");
 
     return ShrinkWrap.create(WebArchive.class)
-            .addPackages(true,"org.jose")
+            .addPackages(true,"org.jose.jaxrs.model")
+            .addPackages(true,"org.jose.jaxrs.server")
+            .addPackages(true,"org.jose.jaxrs.util")
+            .addPackages(true,"org.jose.jaxrs.api")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
             .addAsLibraries(pom.resolve("com.atlassian.commonmark:commonmark").withTransitivity().asFile())
             .addAsLibraries(pom.resolve("org.codehaus.groovy:groovy").withTransitivity().asFile())

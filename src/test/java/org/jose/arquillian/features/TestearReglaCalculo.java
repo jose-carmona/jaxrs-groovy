@@ -35,7 +35,10 @@ public class TestearReglaCalculo {
     PomEquippedResolveStage pom = Maven.configureResolver().workOffline().loadPomFromFile("pom.xml");
 
     return ShrinkWrap.create(WebArchive.class)
-            .addPackages(true,"org.jose")
+            .addPackages(true,"org.jose.jaxrs.model")
+            .addPackages(true,"org.jose.jaxrs.server")
+            .addPackages(true,"org.jose.jaxrs.util")
+            .addPackages(true,"org.jose.jaxrs.api")
             .addPackages(true,"cucumber.runtime.cdi")
             .addAsManifestResource(EmptyAsset.INSTANCE, "beans.xml")
             .addAsManifestResource("META-INF/services/cucumber.runtime.io.ResourceIteratorFactory", "services/cucumber.runtime.io.ResourceIteratorFactory")
@@ -50,7 +53,7 @@ public class TestearReglaCalculo {
 
   @Test
   public void ejecucion_de_test_en_cucumber_embebido_en_la_aplicacion() throws Exception {
-    // CDI funcionando
+    // dado que tenemos CDI funcionando
     assertNotNull(reglaCalculo2Test);
 
     // dado que tenemos la siguiente regla de cálculo
